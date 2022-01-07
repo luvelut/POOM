@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import * as React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeScreen } from './components/screens/HomeScreen';
+import {ScannerScreen} from "./components/screens/ScannerScreen";
+import {DashboardScreen} from "./components/screens/DashboardScreen";
+import {Footer} from "./components/navigator/Footer"
+import {GameScreen} from "./components/screens/GameScreen";
+import {LessonScreen} from "./components/screens/LessonScreen";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <NavigationContainer>
+          <Tab.Navigator style={styles.main} backBehavior='history' tabBar={(props) => <Footer {...props} />}>
+              <Tab.Screen name="Scanner" component={ScannerScreen} />
+              <Tab.Screen name="Home" component={HomeScreen} />
+              <Tab.Screen name="Dashboard" component={DashboardScreen} />
+              <Tab.Screen name="Game" component={GameScreen} />
+              <Tab.Screen name="Lesson" component={LessonScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    main: {
+        flex:1,
+    },
 });
