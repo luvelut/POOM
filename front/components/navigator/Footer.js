@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
 
 export function Footer({ state, descriptors, navigation }) {
     return (
@@ -16,48 +17,50 @@ export function Footer({ state, descriptors, navigation }) {
                 <Ionicons name='chevron-back' color='white' size='30'/>
             </TouchableHighlight>
             {state.routes.map((route, index) => {
-                const { options } = descriptors[route.key];
-                const color = 'white'
-                const size=30
-                let iconName=null
-                if (route.name === 'Home') {
-                    iconName = 'home';
-                } else if (route.name === 'Scanner') {
-                    iconName = 'scan-circle-outline';
-                }
-
-                const isFocused = state.index === index;
-
-                const onPress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                    });
-
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name);
+                if(route.name==='Home' || route.name==='Scanner') {
+                    const { options } = descriptors[route.key];
+                    const color = 'white'
+                    const size=30
+                    let iconName=null
+                    if (route.name === 'Home') {
+                        iconName = 'home';
+                    } else if (route.name === 'Scanner') {
+                        iconName = 'scan-circle-outline';
                     }
-                };
 
-                const onLongPress = () => {
-                    navigation.emit({
-                        type: 'tabLongPress',
-                        target: route.key,
-                    });
-                };
+                    const isFocused = state.index === index;
 
-                return (
-                    <TouchableOpacity
-                        accessibilityRole="button"
-                        accessibilityState={isFocused ? { selected: true } : {}}
-                        accessibilityLabel={options.tabBarAccessibilityLabel}
-                        testID={options.tabBarTestID}
-                        onPress={onPress}
-                        onLongPress={onLongPress}
-                    >
-                        <Ionicons name={iconName} size={size} color={color}/>
-                    </TouchableOpacity>
-                );
+                    const onPress = () => {
+                        const event = navigation.emit({
+                            type: 'tabPress',
+                            target: route.key,
+                        });
+
+                        if (!isFocused && !event.defaultPrevented) {
+                            navigation.navigate(route.name);
+                        }
+                    };
+
+                    const onLongPress = () => {
+                        navigation.emit({
+                            type: 'tabLongPress',
+                            target: route.key,
+                        });
+                    };
+
+                    return (
+                        <TouchableOpacity
+                            accessibilityRole="button"
+                            accessibilityState={isFocused ? { selected: true } : {}}
+                            accessibilityLabel={options.tabBarAccessibilityLabel}
+                            testID={options.tabBarTestID}
+                            onPress={onPress}
+                            onLongPress={onLongPress}
+                        >
+                            <Ionicons name={iconName} size={size} color={color}/>
+                        </TouchableOpacity>
+                    );
+                }
             })}
         </View>
     );
@@ -71,6 +74,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingBottom: 10,
-        paddingTop: 10
+        paddingTop: 10,
+        borderBottomColor: 'red'
     },
 });
