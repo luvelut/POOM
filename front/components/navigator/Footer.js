@@ -14,7 +14,7 @@ export function Footer({ state, descriptors, navigation }) {
                     Alert.alert('tu peux pas revenir + en arrière');
                 }
             }}>
-                <Ionicons name='chevron-back' color='white' size='30'/>
+                <Ionicons name='chevron-back' color='white' size={30}/>
             </TouchableHighlight>
             {state.routes.map((route, index) => {
                 if(route.name==='Home' || route.name==='Scanner') {
@@ -50,6 +50,7 @@ export function Footer({ state, descriptors, navigation }) {
 
                     return (
                         <TouchableOpacity
+                            key={index}
                             accessibilityRole="button"
                             accessibilityState={isFocused ? { selected: true } : {}}
                             accessibilityLabel={options.tabBarAccessibilityLabel}
