@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import { auth } from '../../firebase'
 
 const image = { uri: "https://reactjs.org/favicon.png" };
 
@@ -14,7 +14,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.replace("Home")
+        navigation.navigate("Home")
       }
     })
 
@@ -47,7 +47,7 @@ const LoginScreen = () => {
           style={styles.container}
           behavior="padding"
           >
-          <Image style={styles.image} source={require('../assets/Groupe_de_masques_10.png')} />
+          <Image style={styles.image} source={require('../../assets/Groupe_de_masques_10.png')} />
           <View style={styles.bas}>
           <View style={styles.inputContainer}>
           <TextInput
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   bas: {
   backgroundColor:'#F4F4FC',
   borderRadius : 20,
-  width: '100%',
+  //width: '100%',
   alignItems : 'center',
   position: 'absolute',
     top: 290,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   buttonOutline: {
     backgroundColor: 'white',
-    marginTop: 5,
+    //marginTop: 5,
     borderColor: '#6B6BFD',
     borderWidth: 2,
     marginTop: 30,
