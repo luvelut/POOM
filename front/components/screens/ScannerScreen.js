@@ -3,11 +3,12 @@ import * as React from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { db } from '../../firebase'
+import { auth } from '../../firebase'
 
 export function ScannerScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    let tabMaterial=[];
     const [modalVisible, setModalVisible] = useState(false);
     const [apiData, setApiData] = useState([]);
 
@@ -18,20 +19,22 @@ export function ScannerScreen() {
         })();
     }, []);
 
+    async function setCollection(name,trash) {
+        const cityRef = db.collection('waste').doc(name);
+
+        const res = await cityRef.set({
+            name: name,
+            trash: trash,
+            user: auth.currentUser?.email
+        }, {merge: true});
+    }
+
     async function getProductData(number) {
         try {
             const DATA = await axios.get('https://world.openfoodfacts.org/api/v0/product/'+number+'.json');
-            const packagings = DATA.data.product.ecoscore_data.adjustments.packaging.packagings;
-            packagings.map((material) =>
-                {
-                    const regex = 'en:';
-                    tabMaterial.push((material.material).replace(regex, ' '));
-                }
-            );
-
+            await setCollection(DATA.data.product.product_name_fr, DATA.data.product.packaging);
             setModalVisible(true);
-            setApiData(tabMaterial);
-            //alert(`Ce produit est composé de ${tabMaterial}`);
+            setApiData(DATA.data.product.packaging);
         } catch(err) {
                 console.log("error: ", err);
         }
