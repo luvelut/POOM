@@ -1,5 +1,7 @@
 # POOM
 
+![badge](made-with-react-native.svg)
+
 Poom est une application pédagogique d'apprentissage du tri sélectif dédiée aux élèves de cycle 2 (CP-CE1 et CE2).
 
 ## Présentation
