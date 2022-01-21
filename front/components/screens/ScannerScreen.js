@@ -20,7 +20,8 @@ export function ScannerScreen() {
     }, []);
 
     async function setCollection(name,trash) {
-        const cityRef = db.collection('waste').doc(name);
+        const randomId=Math.floor(Math.random() * 100);
+        const cityRef = db.collection('waste').doc(randomId.toString());
 
         const res = await cityRef.set({
             name: name,
