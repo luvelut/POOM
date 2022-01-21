@@ -5,7 +5,9 @@ import * as React from 'react';
 export function Footer({ state, descriptors, navigation }) {
     return (
         <View style={styles.main}>
-            <TouchableHighlight onPress={() => {
+            <TouchableHighlight underlayColor="#804cfc"
+                accessibilityRole="button"
+                onPress={() => {
                 if(navigation.canGoBack())
                 {
                     navigation.goBack();
