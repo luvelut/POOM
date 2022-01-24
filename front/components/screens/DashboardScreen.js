@@ -3,6 +3,7 @@ import * as React from 'react';
 import {db} from '../../firebase';
 import {auth} from '../../firebase';
 import {useEffect, useState} from 'react';
+import {Header} from '../common/Header';
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 export function DashboardScreen() {
@@ -43,7 +44,7 @@ export function DashboardScreen() {
     if (isLoading) return <View style={styles.container}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View>
-            <Text>DashboardPage</Text>
+            <Header/>
             <FlatList
                 data={tabData}
                 renderItem={renderItem}
