@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
       <NavigationContainer>
-          <Tab.Navigator style={styles.main} backBehavior='history'  tabBar={(props) => <Footer {...props}  />} screenOptions={{ headerShown: false }} >
+          <Tab.Navigator style={styles.main} backBehavior='history' initialRouteName='Login'  tabBar={(props) => <Footer {...props}  />} screenOptions={{ headerShown: false }} >
               <Tab.Screen name="Scanner" component={ScannerScreen} />
               <Tab.Screen name="Home" component={HomeScreen} />
               <Tab.Screen name="Dashboard" component={DashboardScreen} />
