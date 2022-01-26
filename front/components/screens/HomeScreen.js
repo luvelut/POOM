@@ -38,6 +38,9 @@ export function HomeScreen({navigation}) {
                 <Button
                     title="Cours"
                     onPress={() => navigation.navigate('Lesson')}/>
+                <Button
+                    title="ML5"
+                    onPress={() => navigation.navigate('Camera')}/>
             </View>
         </View>
     )
