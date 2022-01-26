@@ -54,7 +54,7 @@ export function DashboardScreen({navigation}) {
             <View style={styles.content}>
                 <View style={styles.buttons}>
                     <View style={[styles.button, styles.leftButton]}>
-                        <Text style={styles.buttonText}>Quantité économisées</Text>
+                        <Text style={styles.buttonText}>Quantitées économisées</Text>
                     </View>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Suivi composte</Text>
