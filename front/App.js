@@ -9,6 +9,7 @@ import {Footer} from "./components/navigator/Footer"
 import {GameScreen} from "./components/screens/GameScreen";
 import {LessonScreen} from "./components/screens/LessonScreen";
 import LoginScreen from './components/screens/LoginScreen';
+import {ListScreen} from "./components/screens/ListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
               <Tab.Screen name="Game" component={GameScreen} />
               <Tab.Screen name="Lesson" component={LessonScreen} />
               <Tab.Screen name="Login" component={LoginScreen} />
+              <Tab.Screen name="List" component={ListScreen} />
         </Tab.Navigator>
       </NavigationContainer>
   );
