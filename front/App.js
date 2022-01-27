@@ -11,6 +11,7 @@ import {LessonScreen} from "./components/screens/LessonScreen";
 import LoginScreen from './components/screens/LoginScreen';
 import {ListScreen} from "./components/screens/ListScreen";
 import {CameraScreen} from "./components/screens/CameraScreen";
+import {PictureScreen} from "./components/screens/PictureScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
               <Tab.Screen name="Login" component={LoginScreen} />
               <Tab.Screen name="List" component={ListScreen} />
               <Tab.Screen name="Camera" component={CameraScreen} />
+              <Tab.Screen name="Picture" component={PictureScreen} />
         </Tab.Navigator>
       </NavigationContainer>
   );
