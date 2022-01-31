@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import * as React from 'react';
-import ml5 from "ml5";
+//import ml5 from "ml5";
+import {useState} from 'react'
 import axios from 'axios';
 
 export function PictureScreen({ route }) {
+    const [result, setResult] = useState([]);
+
     const { image } = route.params;
     if(!image) Alert.alert('Un probleme est survenu');
 
@@ -18,6 +21,20 @@ export function PictureScreen({ route }) {
     }
 
     //getDbWaste();
+
+    /*
+    const classifier = ml5.imageClassifier("../../model/model.json");
+
+    if (classifier) {
+        classifier.classify(image, (error, results) => {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            setResult(results);
+            console.log(results)
+        });
+    }*/
 
     return (
         <View style={{ flex: 1 }}>
