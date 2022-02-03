@@ -2,8 +2,12 @@ import {Alert, FlatList, StyleSheet, Text, TouchableHighlight, View} from 'react
 import * as React from 'react';
 import {auth} from '../../firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import {useNavigation} from "@react-navigation/core";
 
 export function Header() {
+
+    const navigation = useNavigation()
+
     return(
         <View style={styles.container}>
             <FontAwesome name='user-circle' color="#A6A6D5" size={70}/>
@@ -18,7 +22,7 @@ export function Header() {
                 <TouchableHighlight underlayColor="#ffffff"
                                     accessibilityRole="button"
                                     onPress={() => {
-                                            Alert.alert("Pas encore disponible");
+                                        navigation.navigate('GeneralSettings')
                                         }
                                     }>
                     <Ionicons name='settings-outline' color="#A6A6D5" size={30}/>
