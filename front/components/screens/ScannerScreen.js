@@ -5,12 +5,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { db } from '../../firebase'
 import { auth } from '../../firebase'
+import {FontAwesome} from "@expo/vector-icons";
 
 export function ScannerScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [apiData, setApiData] = useState([]);
+    const [productName, setProductName] = useState([]);
+    let grey=false;
+    let yellow=false;
+    let green=false;
 
     useEffect(() => {
         (async () => {
@@ -36,6 +41,7 @@ export function ScannerScreen() {
             await setCollection(DATA.data.product.product_name_fr, DATA.data.product.packaging);
             setModalVisible(true);
             setApiData(DATA.data.product.packaging);
+            setProductName(DATA.data.product.product_name_fr);
         } catch(err) {
                 console.log("error: ", err);
         }
@@ -53,6 +59,17 @@ export function ScannerScreen() {
         return <Text>No access to camera</Text>;
     }
 
+    if(apiData.includes('Plastique')) {
+        grey=true;
+    }
+
+    if(apiData.includes('Verre')) {
+        green=true;
+    }
+
+    if(apiData.includes('Carton')) {
+        yellow=true;
+    }
 
     return (
         <View style={styles.container}>
@@ -67,8 +84,28 @@ export function ScannerScreen() {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.text}>Ce produit contient les matériaux suivants :</Text>
-                        <Text>{apiData}</Text>
+                        <Text style={styles.text}>Le produit est-il : "{productName}" ?</Text>
+                        { grey ?
+                        <View>
+                            <FontAwesome style={styles.icon} name='trash' color="grey" size={40}/>
+                            <Text>Décher ménager</Text>
+                        </View> :
+                            <View/>
+                        }
+                        { yellow ?
+                            <View>
+                                <FontAwesome style={styles.icon} name='trash' color="yellow" size={40}/>
+                                <Text>Décher recyclage</Text>
+                            </View> :
+                            <View/>
+                        }
+                        { green ?
+                            <View>
+                                <FontAwesome style={styles.icon} name='trash' color="green" size={40}/>
+                                <Text>Déchet en verre</Text>
+                            </View> :
+                            <View/>
+                        }
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
@@ -125,7 +162,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
+        width: 300
     },
     button: {
         borderRadius: 20,
@@ -145,6 +183,7 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "bold",
         textAlign: "center",
-        marginBottom: 10
+        marginBottom: 10,
+        fontSize: 20
     }
 });
