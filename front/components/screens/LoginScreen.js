@@ -47,7 +47,7 @@ const LoginScreen = () => {
           style={styles.container}
           behavior="padding"
           >
-          <Image style={styles.image} source={require('../../assets/Groupe_de_masques_10.png')} />
+          <Image style={styles.image} source={require('../../assets/Bannière_connexion.png')} />
           <View style={styles.bas}>
           <View style={styles.inputContainer}>
           <TextInput
