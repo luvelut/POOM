@@ -1,13 +1,15 @@
-import {StyleSheet, Text, View, FlatList, ActivityIndicator, Alert, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight} from 'react-native';
 import * as React from 'react';
 import {db} from '../../firebase';
 import {auth} from '../../firebase';
 import {useEffect, useState} from 'react';
 import {Header} from '../common/Header';
+import { LinearGradient } from 'expo-linear-gradient';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export function DashboardScreen({navigation}) {
+   
     const [tabData, setTabData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     async function getUserWaste() {
@@ -46,21 +48,46 @@ export function DashboardScreen({navigation}) {
             isMounted = true
         }
     }, []);
+    
+    const colorScheme = useColorScheme();
+    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+    const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-    if (isLoading) return <View style={styles.container}><ActivityIndicator size="large" color="#0000ff" /></View>
+    if (isLoading) return <View style={styles.container, themeContainerStyle}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
-        <View>
+        <View style={themeContainerStyle}>
             <Header/>
-            <View style={styles.content}>
+            <View style={ styles.container.content, themeContainerStyle}>
                 <View style={styles.buttons}>
-                    <View style={[styles.button, styles.leftButton]}>
+                    <TouchableOpacity
+                        title=""
+                        onPress={() => navigation.navigate('')}>
+                    <LinearGradient
+                        colors={['rgb(165,107,253)', 'transparent']}
+                        style={styles.buttonGradienteQuantitéesEco}
+                        start={{ x: 1, y: 1 }}
+                        end={{ x: 1, y: 0 }}
+                    >
                         <Text style={styles.buttonText}>Quantitées économisées</Text>
-                    </View>
-                    <View style={styles.button}>
+                    </LinearGradient> 
+                        <Image style={styles.buttonQuantitéesEco} source={require('../../assets/quantitées_économisées.png')}></Image>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                        title=""
+                        onPress={() => navigation.navigate('')}>
+                    <LinearGradient
+                        colors={['rgb(165,107,253)', 'transparent']}
+                        style={styles.buttonGradientSuivi}
+                        start={{ x: 1, y: 1 }}
+                        end={{ x: 1, y: 0 }}
+                    >
                         <Text style={styles.buttonText}>Suivi composte</Text>
-                    </View>
+                    </LinearGradient> 
+                        <Image style={styles.buttonSuivi} source={require('../../assets/composte.png')}></Image>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.title}>Badges</Text>
+                <Text style={styles.title, themeTextStyle}>Badges</Text>
                 <View style={styles.badgeSection}>
                     <View style={styles.badgeList}>
                         <MaterialCommunityIcons style={styles.badgeItem} name="recycle-variant" size={30} color="#C49372" />
@@ -78,7 +105,7 @@ export function DashboardScreen({navigation}) {
                         <Ionicons name="ios-add-outline" size={45} color="#9C9CD0" />
                     </TouchableHighlight>
                 </View>
-                <Text style={styles.title}>Liste des déchets</Text>
+                <Text style={styles.title, themeTextStyle}>Liste des déchets</Text>
                 <View style={styles.list}>
                     <FlatList
                         numColumns={tabData.length}
@@ -105,6 +132,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center"
+    },
+    lightContainer: {
+        flex: 1,
+        justifyContent: "center",
+    },
+    darkContainer: {
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: '#394153',
+    },
+    lightThemeText: {
+        fontSize: 18,
+        paddingVertical: 5,
+        fontWeight: 'bold',
+        color: '#242c40',
+    },
+    darkThemeText: {
+        fontSize: 18,
+        paddingVertical: 5,
+        fontWeight: 'bold',
+        color: '#d0d0c0',
     },
     title: {
         fontSize: 18,
@@ -159,18 +207,44 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         paddingBottom: 10
     },
-    button: {
-        backgroundColor: '#816BFD',
-        borderRadius: 25,
-        padding: 20,
-        alignItems: 'center',
-        alignContent: "center"
-    },
     buttonText: {
-        color: 'white'
+        bottom : 20,
+        left : 15,
+        position: 'absolute',
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
     },
-    leftButton: {
-        width: 140,
-        marginRight: 25
+    buttonQuantitéesEco:{
+        left:1,
+        right:20,
+        width: 160,
+        height: 100,
+        borderRadius: 25,
+    },
+    buttonGradienteQuantitéesEco:{
+        position: 'absolute',
+        left:1,
+        right:20,
+        width: 160,
+        height: 100,
+        borderRadius: 25,
+        zIndex:1,
+    },
+    buttonSuivi:{
+        right:1,
+        left:20,
+        width: 160,
+        height: 100,
+        borderRadius: 25,
+    },
+    buttonGradientSuivi:{
+        position: 'absolute',
+        right:1,
+        left:20,
+        width: 160,
+        height: 100,
+        borderRadius: 25,
+        zIndex:1,
     }
 });

@@ -43,7 +43,7 @@ const LoginScreen = () => {
 
 
      return (
-          <KeyboardAvoidingView
+          <KeyboardAvoidingView 
           style={styles.container}
           behavior="padding"
           >
