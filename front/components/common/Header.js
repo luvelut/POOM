@@ -26,7 +26,7 @@ export function Header() {
                 <TouchableHighlight underlayColor="#ffffff"
                                     accessibilityRole="button"
                                     onPress={() => {
-                                        navigation.navigate('Dashboard')
+                                        navigation.navigate('GeneralSettings')
                                         }
                                     }>
                     <Ionicons name='settings-outline' color="#A6A6D5" size={30}/>
