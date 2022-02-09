@@ -1,4 +1,4 @@
-import {Alert, FlatList, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, Text, useColorScheme, TouchableHighlight, View} from 'react-native';
 import * as React from 'react';
 import {auth} from '../../firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -8,12 +8,17 @@ export function Header() {
 
     const navigation = useNavigation()
 
+    const colorScheme = useColorScheme();
+    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+    const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+
+
     return(
-        <View style={styles.container}>
+        <View style={styles.container, themeContainerStyle}>
             <FontAwesome name='user-circle' color="#A6A6D5" size={70}/>
             <View>
-                <Text>Ecole du Puy en Velay</Text>
-                <Text style={styles.subtitle} >27 élèves</Text>
+                <Text style={themeTextStyle}>Ecole du Puy en Velay</Text>
+                <Text style={styles.subtitle, themeTextStyle} >27 élèves</Text>
                 <View style={styles.gauge}>
                     <View style={styles.percent}/>
                 </View>
@@ -35,6 +40,7 @@ export function Header() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        paddingTop: 60,
         padding: 35,
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -55,5 +61,29 @@ const styles = StyleSheet.create({
         width: 30,
         backgroundColor: "#816BFD",
         borderRadius: 50
-    }
+    },
+    lightContainer: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        paddingTop: 60,
+        padding: 35,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20
+      },
+      darkContainer: {
+        backgroundColor: '#242c40',
+        flexDirection: 'row',
+        paddingTop: 60,
+        padding: 35,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20
+      },
+      lightThemeText: {
+        color: '#242c40',
+      },
+      darkThemeText: {
+        color: '#d0d0c0',
+      },
 });

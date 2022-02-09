@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, Modal, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, Modal, Vibration, Pressable, FlatList } from 'react-native';
 import * as React from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect } from 'react';
@@ -31,10 +31,16 @@ export function ScannerScreen() {
     }
 
     async function getProductData(number) {
+
+        const ONE_SECOND_IN_MS = 1000;
+    ;
+
+      
         try {
             const DATA = await axios.get('https://world.openfoodfacts.org/api/v0/product/'+number+'.json');
             await setCollection(DATA.data.product.product_name_fr, DATA.data.product.packaging);
             setModalVisible(true);
+            Vibration.vibrate( ONE_SECOND_IN_MS)
             setApiData(DATA.data.product.packaging);
         } catch(err) {
                 console.log("error: ", err);

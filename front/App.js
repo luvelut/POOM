@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Button, useColorScheme, TouchableHighlight } from 'react-native';
+import { StatusBar } from 'expo-status-bar'; // automatically switches bar style based on theme!
 import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,6 +18,13 @@ import {SoundScreen} from "./components/screens/settings/SoundScreen";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+    const colorScheme = useColorScheme();
+
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+  const themeContainerStyle =
+    colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+
   return (
       <NavigationContainer>
           <Tab.Navigator style={styles.main} backBehavior='history' initialRouteName='Login'  tabBar={(props) => <Footer {...props}  />} screenOptions={{ headerShown: false }} >

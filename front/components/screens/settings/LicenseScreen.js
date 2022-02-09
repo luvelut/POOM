@@ -1,22 +1,27 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, useColorScheme, View} from 'react-native';
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
 import {FontAwesome} from "@expo/vector-icons";
 
 export function LicenseScreen() {
+
+    const colorScheme = useColorScheme();
+    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+    const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+
     return (
         <View>
             <Settings/>
-            <View style={styles.container}>
-                <Text style={styles.title}>Paramètres licence</Text>
+            <View style={styles.container, themeContainerStyle}>
+                <Text style={styles.title, themeTextStyle}>Paramètres licence</Text>
                 <View style={styles.info}>
                     <FontAwesome style={styles.icon} name='euro' color="#816BFD" size={40}/>
-                    <Text style={styles.subtitle}>Licence valable jusqu'au 5/09/2022</Text>
+                    <Text style={styles.subtitle, themeTextStyle}>Licence valable jusqu'au 5/09/2022</Text>
                 </View>
                 <TouchableOpacity
                     style={styles.button}
                 >
-                    <Text style={styles.buttonText}>Contacter un administrateur</Text>
+                    <Text style={styles.buttonText, themeTextStyle}>Contacter un administrateur</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -24,6 +29,22 @@ export function LicenseScreen() {
 }
 
 const styles = StyleSheet.create({
+    lightContainer: {
+        paddingHorizontal : 70,
+        paddingVertical: 20,
+    },
+    darkContainer: {
+        paddingHorizontal : 70,
+        paddingVertical: 20,
+        backgroundColor: '#394153',
+    },
+    lightThemeText: {
+        color: 'black',
+    },
+    darkThemeText: {
+        fontWeight: 'bold',
+        color: '#d0d0c0',
+    },
     title: {
         fontWeight: 'bold',
         fontSize: 20,
