@@ -12,13 +12,12 @@ export function Header() {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-
     return(
-        <View style={styles.container, themeContainerStyle}>
+        <View style={[styles.container, styles.themeContainerStyle]}>
             <FontAwesome name='user-circle' color="#A6A6D5" size={70}/>
             <View>
-                <Text style={themeTextStyle}>Ecole du Puy en Velay</Text>
-                <Text style={styles.subtitle, themeTextStyle} >27 élèves</Text>
+                <Text style={[styles.themeTextStyle, styles.title]}>Ecole du Puy en Velay</Text>
+                <Text style={[styles.subtitle, themeTextStyle]} >27 élèves</Text>
                 <View style={styles.gauge}>
                     <View style={styles.percent}/>
                 </View>
@@ -27,7 +26,7 @@ export function Header() {
                 <TouchableHighlight underlayColor="#ffffff"
                                     accessibilityRole="button"
                                     onPress={() => {
-                                        navigation.navigate('GeneralSettings')
+                                        navigation.navigate('Dashboard')
                                         }
                                     }>
                     <Ionicons name='settings-outline' color="#A6A6D5" size={30}/>
@@ -64,26 +63,17 @@ const styles = StyleSheet.create({
     },
     lightContainer: {
         backgroundColor: 'white',
-        flexDirection: 'row',
-        paddingTop: 60,
-        padding: 35,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 20
-      },
-      darkContainer: {
+    },
+    darkContainer: {
         backgroundColor: '#242c40',
-        flexDirection: 'row',
-        paddingTop: 60,
-        padding: 35,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 20
-      },
-      lightThemeText: {
+    },
+    lightThemeText: {
         color: '#242c40',
-      },
-      darkThemeText: {
+    },
+    darkThemeText: {
         color: '#d0d0c0',
-      },
+    },
+    title: {
+        fontWeight: 'bold',
+    }
 });

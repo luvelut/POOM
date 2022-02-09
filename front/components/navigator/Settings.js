@@ -1,9 +1,8 @@
-import {StyleSheet, Text, TouchableHighlight, useColorScheme , TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, useColorScheme , TouchableOpacity, View} from 'react-native';
 import * as React from 'react';
 import {FontAwesome, Ionicons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
 import {useRoute} from "@react-navigation/native";
-import {useEffect, useState} from 'react';
 
 export function Settings() {
 
@@ -11,12 +10,10 @@ export function Settings() {
     const route = useRoute();
 
     const colorScheme = useColorScheme();
-    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-
     return (
-        <View style={styles.content, themeContainerStyle}>
+        <View style={[styles.content, themeContainerStyle]}>
             <TouchableOpacity onPress={() => navigation.navigate('GeneralSettings')}>
                 <View style={ route.name==='GeneralSettings' ? styles.currentButton : styles.button}>
                     <Ionicons style={styles.icon} name='settings-outline' color={route.name==='GeneralSettings' ? "#816BFD" : "#A6A6D5"} size={20}/>
@@ -41,23 +38,15 @@ export function Settings() {
 
 const styles = StyleSheet.create({
     content: {
-        top : 100,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        backgroundColor: '#F4F4FC'
-    },
-    lightContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        backgroundColor: '#F4F4FC',
-    },
-    darkContainer: {
         paddingTop : 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
+    },
+    lightContainer: {
+        backgroundColor: '#F4F4FC',
+    },
+    darkContainer: {
         backgroundColor: '#242c40',
     },
     button: {

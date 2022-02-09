@@ -16,18 +16,18 @@ export function Footer({ state, descriptors, navigation }) {
                     Alert.alert('tu peux pas revenir + en arrière');
                 }
             }}>
-                <Ionicons name='chevron-back' color='white' size={30}/>
+                <Ionicons name='chevron-back' color='white' size={40}/>
             </TouchableHighlight>
             {state.routes.map((route, index) => {
                 if(route.name==='Home' || route.name==='Scanner') {
                     const { options } = descriptors[route.key];
                     const color = 'white'
-                    const size=30
+                    const size=40
                     let iconName=null
                     if (route.name === 'Home') {
                         iconName = 'home';
                     } else if (route.name === 'Scanner') {
-                        iconName = 'scan-circle-outline';
+                        iconName = 'camera';
                     }
 
                     const isFocused = state.index === index;
@@ -74,10 +74,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#804cfc',
         justifyContent: 'space-around',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        paddingBottom: 10,
+        //borderTopLeftRadius: 30,
+        //borderTopRightRadius: 30,
+        paddingBottom: 40,
         paddingTop: 10,
-        borderBottomColor: 'red'
     },
 });

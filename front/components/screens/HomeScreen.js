@@ -1,9 +1,6 @@
-import {StyleSheet, Text, View, Button, useColorScheme, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, useColorScheme, Image, TouchableOpacity} from 'react-native';
 import * as React from 'react';
-import {useNavigation} from "@react-navigation/core";
-import { auth } from '../../firebase';
 import { LinearGradient } from 'expo-linear-gradient';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from '../common/Header';
 
 export function HomeScreen({navigation}) {
@@ -12,21 +9,10 @@ export function HomeScreen({navigation}) {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-    //const navigation = useNavigation()
-
-    const handleSignOut = () => {
-        auth
-            .signOut()
-            .then(() => {
-                navigation.navigate("Login")
-            })
-            .catch(error => alert(error.message))
-    }
-
     return (
         <View>
             <Header/>
-        <View style={ styles.container, themeContainerStyle}>
+        <View style={ [styles.container, styles.themeContainerStyle]}>
             <TouchableOpacity
             title="Scanner"
             onPress={() => navigation.navigate('Scanner')}>
@@ -38,10 +24,10 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-            <Text style={styles.buttonText, themeTextStyle}>Scanner</Text>
+            <Text style={[styles.buttonText, styles.themeTextStyle]}>Scanner</Text>
             </LinearGradient> 
             
-            <Image style={styles.buttonScanner} source={require('../../assets/Scanner.png')}></Image>
+            <Image style={styles.buttonScanner} source={require('../../assets/Scanner.png')}/>
              
             </TouchableOpacity>
 
@@ -55,9 +41,9 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={styles.buttonText, themeTextStyle}>Jeux</Text>
+                <Text style={[styles.buttonText, styles.themeTextStyle]}>Jeux</Text>
             </LinearGradient> 
-            <Image style={styles.buttonJeux} source={require('../../assets/Jeux.png')}></Image>
+            <Image style={styles.buttonJeux} source={require('../../assets/Jeux.png')}/>
             </TouchableOpacity>
                 
             <TouchableOpacity
@@ -70,9 +56,9 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={styles.buttonText, themeTextStyle}>Nos déchets</Text>
+                <Text style={[styles.buttonText, styles.themeTextStyle]}>Nos déchets</Text>
             </LinearGradient>
-            <Image style={styles.buttonDechets} source={require('../../assets/Dechets.png')}></Image>
+            <Image style={styles.buttonDechets} source={require('../../assets/Dechets.png')}/>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -85,10 +71,10 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={styles.buttonText, themeTextStyle}>Supports pédagogiques</Text>
+                <Text style={[styles.buttonText, styles.themeTextStyle]}>Supports pédagogiques</Text>
 
             </LinearGradient>
-            <Image style={styles.buttonPedagogie} source={require('../../assets/pedagogique.png')}></Image>
+            <Image style={styles.buttonPedagogie} source={require('../../assets/pedagogique.png')}/>
             </TouchableOpacity>
         </View>
         </View>
@@ -100,8 +86,6 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     lightContainer: {
         backgroundColor: '#d0d0c0',
