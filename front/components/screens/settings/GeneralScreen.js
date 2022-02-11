@@ -24,8 +24,8 @@ export function GeneralScreen({navigation}) {
         <View>
             <Settings/>
             <ScrollView>
-            <View style={styles.container, themeContainerStyle}>
-                <Text style={styles.title, themeTextStyle}>Réglages généraux</Text>
+            <View style={[styles.container, themeContainerStyle]}>
+                <Text style={[styles.title, themeTextStyle]}>Réglages généraux</Text>
                 <View style={styles.profil}>
                     <FontAwesome name='user-circle' color="#A6A6D5" size={60}/>
                     <TouchableOpacity
@@ -34,21 +34,21 @@ export function GeneralScreen({navigation}) {
                         }}
                         style={styles.button}
                     >
-                        <Text style={styles.buttonText, themeTextStyle} >Changer l'image</Text>
+                        <Text style={[styles.buttonText]} >Changer l'image</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <Text style={styles.subtitle, themeTextStyle}>Nom de l'école</Text>
+                    <Text style={[styles.subtitle, themeTextStyle]}>Nom de l'école</Text>
                     <View style={styles.form}>
                         <Text style={styles.formText}>************</Text>
                         <FontAwesome name='edit' color="#A6A6D5" size={20}/>
                     </View>
-                    <Text style={styles.subtitle, themeTextStyle}>Mot de passe</Text>
+                    <Text style={[styles.subtitle, themeTextStyle]}>Mot de passe</Text>
                     <View style={styles.form}>
                         <Text style={styles.formText}>************</Text>
                         <FontAwesome name='edit' color="#A6A6D5" size={20}/>
                     </View>
-                    <Text style={styles.subtitle, themeTextStyle}>Adresse email</Text>
+                    <Text style={[styles.subtitle, themeTextStyle]}>Adresse email</Text>
                     <View style={styles.form}>
                         <Text style={styles.formText}>************</Text>
                         <FontAwesome name='edit' color="#A6A6D5" size={20}/>
@@ -71,20 +71,13 @@ const styles = StyleSheet.create({
         paddingHorizontal : 70,
         paddingVertical: 20,
     },
-    lightContainer: {
-        paddingHorizontal : 70,
-        paddingVertical: 20,
-    },
     darkContainer: {
-        paddingHorizontal : 70,
-        paddingVertical: 20,
         backgroundColor: '#394153',
     },
     lightThemeText: {
         color: 'black',
     },
     darkThemeText: {
-        fontWeight: 'bold',
         color: '#d0d0c0',
     },
     title: {

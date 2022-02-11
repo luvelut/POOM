@@ -30,7 +30,7 @@ export function DashboardScreen({navigation}) {
 
     const renderItem = ({item}) => (
         <View style={styles.item}>
-            <FontAwesome5 name="circle" size={70} color="#0000ff" />
+            <Image style={styles.image} source={{uri: item.image}}/>
             <Text style={styles.itemTitle}>{item.name}</Text>
         </View>
     );
@@ -53,29 +53,27 @@ export function DashboardScreen({navigation}) {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-    if (isLoading) return <View style={styles.container, themeContainerStyle}><ActivityIndicator size="large" color="#0000ff" /></View>
+    if (isLoading) return <View style={[styles.container, styles.themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={themeContainerStyle}>
             <Header/>
-            <View style={ styles.container.content, themeContainerStyle}>
+            <View style={[styles.content, themeContainerStyle]}>
                 <View style={styles.buttons}>
                     <TouchableOpacity
-                        title=""
-                        onPress={() => navigation.navigate('')}>
+                        onPress={() => navigation.navigate('Economy')}>
                     <LinearGradient
                         colors={['rgb(165,107,253)', 'transparent']}
-                        style={styles.buttonGradienteQuantitéesEco}
+                        style={styles.buttonGradienteQuantiteesEco}
                         start={{ x: 1, y: 1 }}
                         end={{ x: 1, y: 0 }}
                     >
                         <Text style={styles.buttonText}>Quantitées économisées</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonQuantitéesEco} source={require('../../assets/quantitées_économisées.png')}></Image>
+                        <Image style={styles.buttonQuantiteesEco} source={require('../../assets/quantitées_économisées.png')}/>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
-                        title=""
-                        onPress={() => navigation.navigate('')}>
+                        onPress={() => Alert.alert("En cours de développement")}>
                     <LinearGradient
                         colors={['rgb(165,107,253)', 'transparent']}
                         style={styles.buttonGradientSuivi}
@@ -84,34 +82,34 @@ export function DashboardScreen({navigation}) {
                     >
                         <Text style={styles.buttonText}>Suivi composte</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonSuivi} source={require('../../assets/composte.png')}></Image>
+                        <Image style={styles.buttonSuivi} source={require('../../assets/composte.png')}/>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.title, themeTextStyle}>Badges</Text>
+                <Text style={[styles.title, themeTextStyle]}>Badges</Text>
                 <View style={styles.badgeSection}>
                     <View style={styles.badgeList}>
-                        <MaterialCommunityIcons style={styles.badgeItem} name="recycle-variant" size={30} color="#C49372" />
-                        <MaterialCommunityIcons style={styles.badgeItem} name="recycle-variant" size={30} color="#9B9B9B" />
-                        <MaterialCommunityIcons style={styles.badgeItem} name="recycle-variant" size={30} color="#FD5900" />
-                        <MaterialCommunityIcons style={styles.badgeItem} name="recycle-variant" size={30} color="#007FFD" />
+                        <Image style={styles.badgeItem} source={require('../../assets/badges/main_verte.png')}/>
+                        <Image style={styles.badgeItem} source={require('../../assets/badges/apprenti_ecolo.png')}/>
+                        <Image style={styles.badgeItem} source={require('../../assets/badges/pro_du_tri.png')}/>
                     </View>
                     <TouchableHighlight style={styles.icon}
                                         underlayColor="#ffffff"
                                         accessibilityRole="button"
                                         onPress={() => {
-                                            Alert.alert("Pas encore disponible");
+                                            navigation.navigate('Badge')
                                         }
                                         }>
                         <Ionicons name="ios-add-outline" size={45} color="#9C9CD0" />
                     </TouchableHighlight>
                 </View>
-                <Text style={styles.title, themeTextStyle}>Liste des déchets</Text>
+                <Text style={[styles.title, themeTextStyle]}>Liste des déchets</Text>
                 <View style={styles.list}>
                     <FlatList
-                        numColumns={tabData.length}
-                        data={tabData.slice(1,3)}
+                        numColumns={2}
+                        data={[tabData[0],tabData[1]]}
                         renderItem={renderItem}
                         keyExtractor={item => item.name}
+                        scrollEnabled={false}
                     />
                     <TouchableHighlight style={styles.icon}
                                         underlayColor="#ffffff"
@@ -133,25 +131,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     },
-    lightContainer: {
-        flex: 1,
-        justifyContent: "center",
-    },
     darkContainer: {
-        flex: 1,
-        justifyContent: "center",
         backgroundColor: '#394153',
     },
     lightThemeText: {
-        fontSize: 18,
-        paddingVertical: 5,
-        fontWeight: 'bold',
         color: '#242c40',
     },
     darkThemeText: {
-        fontSize: 18,
-        paddingVertical: 5,
-        fontWeight: 'bold',
         color: '#d0d0c0',
     },
     title: {
@@ -164,8 +150,7 @@ const styles = StyleSheet.create({
     },
     item: {
         alignItems: 'center',
-        paddingVertical: 5,
-        paddingHorizontal: 15,
+        padding:5,
         borderRadius: 25,
         backgroundColor: 'white',
         marginVertical: 15,
@@ -183,7 +168,13 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     itemTitle: {
-        paddingTop: 5
+        paddingTop: 5,
+        fontWeight: 'bold'
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 50
     },
     badgeSection: {
         flexDirection: 'row',
@@ -201,7 +192,9 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     badgeItem: {
-        paddingHorizontal: 9
+        height: 60,
+        width: 60,
+        marginRight: 15
     },
     buttons: {
         flexDirection:'row',
@@ -215,14 +208,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    buttonQuantitéesEco:{
+    buttonQuantiteesEco:{
         left:1,
         right:20,
         width: 160,
         height: 100,
         borderRadius: 25,
     },
-    buttonGradienteQuantitéesEco:{
+    buttonGradienteQuantiteesEco:{
         position: 'absolute',
         left:1,
         right:20,

@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
-import {FontAwesome} from "@expo/vector-icons";
 
 export function SoundScreen() {
 
@@ -12,21 +11,15 @@ export function SoundScreen() {
     return (
         <View>
             <Settings/>
-            <View style={styles.container, themeContainerStyle}>
-                <Text style={styles.title, themeTextStyle}>Réglages sonores</Text>
+            <View style={[styles.container, themeContainerStyle]}>
+                <Text style={[styles.title, themeTextStyle]}>Réglages sonores</Text>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    lightContainer: {
-        paddingHorizontal : 70,
-        paddingVertical: 20,
-    },
     darkContainer: {
-        paddingHorizontal : 70,
-        paddingVertical: 20,
         backgroundColor: '#394153',
     },
     lightThemeText: {
