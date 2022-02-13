@@ -69,7 +69,7 @@ export function DashboardScreen({navigation}) {
                     >
                         <Text style={styles.buttonText}>Quantitées économisées</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonQuantiteesEco} source={require('../../assets/quantitées_économisées.png')}/>
+                        <Image style={styles.buttonQuantiteesEco} source={require('../../assets/bouton/quantitees_economisees.png')}/>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
@@ -82,7 +82,7 @@ export function DashboardScreen({navigation}) {
                     >
                         <Text style={styles.buttonText}>Suivi composte</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonSuivi} source={require('../../assets/composte.png')}/>
+                        <Image style={styles.buttonSuivi} source={require('../../assets/bouton/composte.png')}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={[styles.title, themeTextStyle]}>Badges</Text>

@@ -1,8 +1,9 @@
-import {StyleSheet, Text, View, Button, TouchableOpacity, Alert, Modal, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Button, TouchableOpacity, Alert, Modal, Pressable, Image} from 'react-native';
 import * as React from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect } from 'react';
 import BarcodeMask from 'react-native-barcode-mask';
+import {Ionicons} from "@expo/vector-icons";
 
 export function ScannerScreen({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -47,15 +48,14 @@ export function ScannerScreen({navigation}) {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text>Pour scanner ton code barre, approche ton téléphone comme si tu le prenais en photo et laisse la magie opérer !</Text>
-                        <View>
-
-                        </View>
+                        <Image style={styles.img} source={require('../../assets/poom.png')}/>
+                        <Ionicons style={styles.icon} name='chatbubble-ellipses-outline' color="#A6A6D5" size={40}/>
+                        <Text style={styles.text}>Pour scanner ton code barre, approche ton téléphone comme si tu le prenais en photo et laisse la magie opérer !</Text>
                         <Pressable
                             style={styles.modalButton}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.modalButtonTxt}>Ok</Text>
+                            <Text style={styles.modalButtonTxt}>D'accord</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        width: 300
+        width: 300,
     },
     boutton: {
         backgroundColor:'#804cfc',
@@ -144,5 +144,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginTop: 30
+    },
+    img: {
+        margin: 30,
+        height: 150,
+        width: 95
+    },
+    icon: {
+        position: 'absolute',
+        top: 60,
+        right: 60
+    },
+    text: {
+        textAlign: 'center'
     }
 });

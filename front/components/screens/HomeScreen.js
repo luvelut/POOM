@@ -27,7 +27,7 @@ export function HomeScreen({navigation}) {
             <Text style={[styles.buttonText, styles.themeTextStyle]}>Scanner</Text>
             </LinearGradient> 
             
-            <Image style={styles.buttonScanner} source={require('../../assets/Scanner.png')}/>
+            <Image style={styles.buttonScanner} source={require('../../assets/home/Scanner.png')}/>
              
             </TouchableOpacity>
 
@@ -43,7 +43,7 @@ export function HomeScreen({navigation}) {
             >
                 <Text style={[styles.buttonText, styles.themeTextStyle]}>Jeux</Text>
             </LinearGradient> 
-            <Image style={styles.buttonJeux} source={require('../../assets/Jeux.png')}/>
+            <Image style={styles.buttonJeux} source={require('../../assets/home/Jeux.png')}/>
             </TouchableOpacity>
                 
             <TouchableOpacity
@@ -58,7 +58,7 @@ export function HomeScreen({navigation}) {
             >
                 <Text style={[styles.buttonText, styles.themeTextStyle]}>Nos déchets</Text>
             </LinearGradient>
-            <Image style={styles.buttonDechets} source={require('../../assets/Dechets.png')}/>
+            <Image style={styles.buttonDechets} source={require('../../assets/home/Dechets.png')}/>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -74,7 +74,7 @@ export function HomeScreen({navigation}) {
                 <Text style={[styles.buttonText, styles.themeTextStyle]}>Supports pédagogiques</Text>
 
             </LinearGradient>
-            <Image style={styles.buttonPedagogie} source={require('../../assets/pedagogique.png')}/>
+            <Image style={styles.buttonPedagogie} source={require('../../assets/home/pedagogique.png')}/>
             </TouchableOpacity>
         </View>
         </View>
