@@ -20,7 +20,7 @@ Dans cette partie de l’application, l’utilisateur va pouvoir voir son histor
 
 :video_game: __Jeux :__
 
-Un petit jeu pédagogique dans lequel le joueur (un élève entre 6 et 8 ans) va devoir choisir dans quel poubelle il doit mettre le déchet que l’on lui montre. *en cours de développement*
+Un petit jeu pédagogique dans lequel le joueur (un élève entre 6 et 8 ans) va devoir choisir dans quel poubelle il doit mettre le déchet que l’on lui montre. *Cette partie ne sera pas développer pour le projet final*
 
 
 :books: __Ressources pédagogiques (« Cours ») :__
@@ -48,6 +48,11 @@ const DATA = await axios.get('https://world.openfoodfacts.org/api/v0/product/'+n
 Firebase fournit un ensemble de solutions et de services compatible avec les applications.
 Nous utilisons `Firebase Authentication` pour la gestion des utilisateurs (connexion et inscription), ainsi que `Firestore` qui nous permet de stocker les produits scannés dans une base de donnée.
 
+### Plugins implémentés
+* L'accès à la caméra et le scanner du code barre.
+* La vibration du téléphone quand un nouveau résultat est trouvé.
+
+*La gestion du thème sombre a également été réalisée.*
 
 ## Auteurs
 
