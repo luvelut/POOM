@@ -23,7 +23,7 @@ export function ResultScreen({route, navigation}) {
     async function setCollection() {
         const randomId=Math.floor(Math.random() * 100);
         const cityRef = db.collection('waste').doc(randomId.toString());
-
+        if(!productUrl) { setProductUrl('https://via.placeholder.com/150/A6A6D5/FFFFFF/?text=Image') }
         const res = await cityRef.set({
             name: productName,
             packaging: apiData,
