@@ -18,6 +18,7 @@ import {LicenseScreen} from "./components/screens/settings/LicenseScreen";
 import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
 import {ErrorScreen} from "./components/screens/ErrorScreen";
+import {NewTrashScreen} from "./components/screens/NewTrashScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,6 +41,7 @@ export default function App() {
               <Tab.Screen name={"Badge"} component={BadgeScreen} />
               <Tab.Screen name={"Economy"} component={EconomyScreen} />
               <Tab.Screen name={"Error"} component={ErrorScreen} />
+              <Tab.Screen name={"New"} component={NewTrashScreen} />
           </Tab.Navigator>
       </NavigationContainer>
   );
