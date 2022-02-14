@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
+import {COLORS} from '../../variables/colors'
 
 export function Footer({ state, descriptors, navigation }) {
     return (
@@ -72,7 +73,7 @@ export function Footer({ state, descriptors, navigation }) {
 const styles = StyleSheet.create({
     main: {
         flexDirection: 'row',
-        backgroundColor: '#804cfc',
+        backgroundColor: COLORS.primary,
         justifyContent: 'space-around',
         //borderTopLeftRadius: 30,
         //borderTopRightRadius: 30,

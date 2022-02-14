@@ -3,6 +3,7 @@ import * as React from 'react';
 import {auth} from '../../firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/core";
+import {COLORS} from '../../variables/colors'
 
 export function Header() {
 
@@ -13,10 +14,10 @@ export function Header() {
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     return(
-        <View style={[styles.container, styles.themeContainerStyle]}>
-            <FontAwesome name='user-circle' color="#A6A6D5" size={70}/>
+        <View style={[styles.container, themeContainerStyle]}>
+            <FontAwesome name='user-circle' color={COLORS.secondary} size={70}/>
             <View>
-                <Text style={[styles.themeTextStyle, styles.title]}>Ecole du Puy en Velay</Text>
+                <Text style={[themeTextStyle, styles.title]}>Ecole du Puy en Velay</Text>
                 <Text style={[styles.subtitle, themeTextStyle]} >27 élèves</Text>
                 <View style={styles.gauge}>
                     <View style={styles.percent}/>
@@ -29,7 +30,7 @@ export function Header() {
                                         navigation.navigate('GeneralSettings')
                                         }
                                     }>
-                    <Ionicons name='settings-outline' color="#A6A6D5" size={30}/>
+                    <Ionicons name='settings-outline' color={COLORS.secondary} size={30}/>
                 </TouchableHighlight>
             </View>
         </View>
@@ -47,31 +48,31 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     subtitle : {
-        color: "#A6A6D5",
+        color: COLORS.secondary,
         paddingVertical: 10
     },
     gauge : {
         height: 10,
-        backgroundColor: "#E8E8FE",
+        backgroundColor: COLORS.background,
         borderRadius: 50
     },
     percent : {
         height: 10,
         width: 30,
-        backgroundColor: "#816BFD",
+        backgroundColor: COLORS.primary,
         borderRadius: 50
     },
     lightContainer: {
         backgroundColor: 'white',
     },
     darkContainer: {
-        backgroundColor: '#242c40',
+        backgroundColor: COLORS.dark,
     },
     lightThemeText: {
-        color: '#242c40',
+        color: COLORS.dark,
     },
     darkThemeText: {
-        color: '#d0d0c0',
+        color: 'white',
     },
     title: {
         fontWeight: 'bold',

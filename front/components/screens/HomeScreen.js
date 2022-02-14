@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, useColorScheme, Image, TouchableOpacity} from 'r
 import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Header } from '../common/Header';
+import {COLORS} from '../../variables/colors'
 
 export function HomeScreen({navigation}) {
     
@@ -12,7 +13,7 @@ export function HomeScreen({navigation}) {
     return (
         <View>
             <Header/>
-        <View style={ [styles.container, styles.themeContainerStyle]}>
+        <View style={ [styles.container, themeContainerStyle]}>
             <TouchableOpacity
             title="Scanner"
             onPress={() => navigation.navigate('Scanner')}>
@@ -24,7 +25,7 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-            <Text style={[styles.buttonText, styles.themeTextStyle]}>Scanner</Text>
+            <Text style={[styles.buttonText, themeTextStyle]}>Scanner</Text>
             </LinearGradient> 
             
             <Image style={styles.buttonScanner} source={require('../../assets/home/Scanner.png')}/>
@@ -41,7 +42,7 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Jeux</Text>
+                <Text style={[styles.buttonText, themeTextStyle]}>Jeux</Text>
             </LinearGradient> 
             <Image style={styles.buttonJeux} source={require('../../assets/home/Jeux.png')}/>
             </TouchableOpacity>
@@ -56,7 +57,7 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Nos déchets</Text>
+                <Text style={[styles.buttonText, themeTextStyle]}>Nos déchets</Text>
             </LinearGradient>
             <Image style={styles.buttonDechets} source={require('../../assets/home/Dechets.png')}/>
             </TouchableOpacity>
@@ -71,7 +72,7 @@ export function HomeScreen({navigation}) {
                 start={{ x: 1, y: 1 }}
                 end={{ x: 1, y: 0 }}
             >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Supports pédagogiques</Text>
+                <Text style={[styles.buttonText, themeTextStyle]}>Supports pédagogiques</Text>
 
             </LinearGradient>
             <Image style={styles.buttonPedagogie} source={require('../../assets/home/pedagogique.png')}/>
@@ -88,10 +89,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     lightContainer: {
-        backgroundColor: '#d0d0c0',
+        backgroundColor: COLORS.background,
     },
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
         bottom : 20,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#d0d0c0',
+        color: 'white',
     },
     buttonText: {
         bottom : 20,

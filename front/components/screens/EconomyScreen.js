@@ -5,6 +5,7 @@ import {PieChart} from 'react-native-chart-kit'
 import {useState, useEffect} from "react";
 import * as WasteService from '../../services/wasteService'
 import {FontAwesome} from "@expo/vector-icons";
+import {COLORS} from '../../variables/colors'
 
 export function EconomyScreen() {
 
@@ -30,17 +31,17 @@ export function EconomyScreen() {
                         {
                             name: 'déchet(s) recyclé(s)',
                             number: yellowWaste.length,
-                            color: '#FECE00',
+                            color: COLORS.yellow_trash,
                         },
                         {
                             name: 'déchet(s) en verre',
                             number: greenWaste.length,
-                            color: 'green',
+                            color: COLORS.green_trash,
                         },
                         {
                             name: 'déchet(s) jeté(s)',
                             number: greyWaste.length,
-                            color: 'grey',
+                            color: COLORS.grey_trash,
                         },
                     ]}
                     width={400}
@@ -78,19 +79,19 @@ export function EconomyScreen() {
                     <MyPieChart />
                     <View style={styles.legend}>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="#FECE00" >
+                            <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
                                 <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
                             </View>
                             <Text>{yellowWaste.length} déchet(s) recyclé(s)</Text>
                         </View>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="green" >
+                            <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
                                 <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
                             </View>
                             <Text>{greenWaste.length} déchet(s) en verre</Text>
                         </View>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="grey" >
+                            <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
                                 <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
                             </View>
                             <Text>{greyWaste.length} déchet(s) jeté(s)</Text>

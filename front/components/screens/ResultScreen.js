@@ -4,6 +4,7 @@ import {FontAwesome} from "@expo/vector-icons";
 import {useState} from "react";
 import {auth, db} from "../../firebase";
 import axios from "axios";
+import {COLORS} from '../../variables/colors'
 
 export function ResultScreen({route, navigation}) {
     const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +76,7 @@ export function ResultScreen({route, navigation}) {
                     { grey ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="grey" >
+                                <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
                                     <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
                                 </View>
                                 <Text>Déchet ménager</Text>
@@ -87,7 +88,7 @@ export function ResultScreen({route, navigation}) {
                     { yellow ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="#FECE00" >
+                                <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
                                     <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
                                 </View>
                                 <Text>Déchet recyclage</Text>
@@ -99,7 +100,7 @@ export function ResultScreen({route, navigation}) {
                     { green ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="green" >
+                                <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
                                     <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet en verre</Text>
@@ -114,13 +115,13 @@ export function ResultScreen({route, navigation}) {
                         style={[styles.buttonClose, styles.leftButton]}
                         onPress={() => {setCollection(); navigation.navigate('Scanner')}}
                     >
-                        <FontAwesome style={styles.icon} name='check' color="#3CB881" size={40}/>
+                        <FontAwesome style={styles.icon} name='check' color={COLORS.success} size={40}/>
                     </Pressable>
                     <Pressable
                         style={[styles.buttonClose, styles.rightButton]}
-                        onPress={() => navigation.navigate('Scanner')}
+                        onPress={() => navigation.navigate('Error')}
                     >
-                        <FontAwesome style={styles.icon} name='times' color="#FF3D5E" size={40}/>
+                        <FontAwesome style={styles.icon} name='times' color={COLORS.error} size={40}/>
                     </Pressable>
                 </View>
             </View>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
-        backgroundColor: "#F4F4FC"
+        backgroundColor: COLORS.background
     },
     modalView: {
         margin: 20,

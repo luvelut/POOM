@@ -7,6 +7,7 @@ import {Header} from '../common/Header';
 import { LinearGradient } from 'expo-linear-gradient';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {COLORS} from "../../variables/colors";
 
 export function DashboardScreen({navigation}) {
    
@@ -132,13 +133,13 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
-        color: '#242c40',
+        color: COLORS.dark,
     },
     darkThemeText: {
-        color: '#d0d0c0',
+        color: 'white',
     },
     title: {
         fontSize: 18,

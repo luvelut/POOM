@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, useColorScheme, View} from 'react-na
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
 import {FontAwesome} from "@expo/vector-icons";
+import {COLORS} from '../../../variables/colors'
 
 export function LicenseScreen() {
 
@@ -34,13 +35,13 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
         color: 'black',
     },
     darkThemeText: {
-        color: '#d0d0c0',
+        color: 'white',
     },
     title: {
         fontWeight: 'bold',
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 30,
         paddingVertical: 10,
-        backgroundColor: "#F4F4FC",
+        backgroundColor: COLORS.background,
         borderRadius: 20,
         margin: 20,
         justifyContent: 'space-between',
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     button: {
-        backgroundColor: '#6B6BFD',
+        backgroundColor: COLORS.primary,
         padding : 10,
         borderRadius: 20,
         alignItems:'center',

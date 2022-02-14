@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../../firebase'
+import {COLORS} from '../../variables/colors'
 
 const image = { uri: "https://reactjs.org/favicon.png" };
 
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     width: 768,
   },
   bas: {
-  backgroundColor:'#F4F4FC',
+  backgroundColor: COLORS.background,
   borderRadius : 20,
   //width: '100%',
   alignItems : 'center',
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#6B6BFD',
+    backgroundColor: COLORS.primary,
     width: '100%',
     padding: 15,
     borderRadius: 35,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     //marginTop: 5,
-    borderColor: '#6B6BFD',
+    borderColor: COLORS.primary,
     borderWidth: 2,
     marginTop: 30,
   },
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   buttonOutlineText: {
-    color: '#6B6BFD',
+    color: COLORS.primary,
     fontWeight: '700',
     fontSize: 20,
   },
