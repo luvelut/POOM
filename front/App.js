@@ -17,16 +17,11 @@ import {GeneralScreen} from "./components/screens/settings/GeneralScreen";
 import {LicenseScreen} from "./components/screens/settings/LicenseScreen";
 import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
+import {ErrorScreen} from "./components/screens/ErrorScreen";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-
-    const colorScheme = useColorScheme();
-
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle =
-    colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
   return (
       <NavigationContainer>
@@ -44,6 +39,7 @@ export default function App() {
               <Tab.Screen name={"Result"} component={ResultScreen} />
               <Tab.Screen name={"Badge"} component={BadgeScreen} />
               <Tab.Screen name={"Economy"} component={EconomyScreen} />
+              <Tab.Screen name={"Error"} component={ErrorScreen} />
           </Tab.Navigator>
       </NavigationContainer>
   );
