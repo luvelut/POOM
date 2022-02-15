@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, Image, Pressable, StyleSheet, Text, Vibration, View} from 'react-native';
+import {ActivityIndicator, Alert, Image, Pressable, StyleSheet, Text, Vibration, View, ScrollView} from 'react-native';
 import * as React from 'react';
 import {FontAwesome} from "@expo/vector-icons";
 import {useState} from "react";
@@ -15,6 +15,7 @@ export function ResultScreen({route, navigation}) {
     let grey=false;
     let yellow=false;
     let green=false;
+    let warning=false;
 
     if(!number) {
         Alert.alert("Un problème est survenu lors du scan du code barre... Réésayez");
@@ -46,10 +47,6 @@ export function ResultScreen({route, navigation}) {
             setApiData(DATA.data.product.packaging);
             setProductName(DATA.data.product.product_name_fr);
             setProductUrl(DATA.data.product.selected_images.front.display.fr);
-            console.log(apiData);
-            if(!apiData.includes('Verre') && !apiData.includes('Plastique') && !apiData.includes('Carton')) {
-                navigation.navigate('Error', {notFound: true})
-            }
             setIsLoading(false);
         } catch(err) {
             console.log("error: ", err);
@@ -57,6 +54,9 @@ export function ResultScreen({route, navigation}) {
     }
 
     getProductData(number);
+    if(!apiData.includes('Verre') && !apiData.includes('Plastique') && !apiData.includes('Carton')) {
+        navigation.navigate('Error', {notFound: true})
+    }
 
     if(apiData.includes('Plastique')) {
         grey=true;
@@ -70,22 +70,35 @@ export function ResultScreen({route, navigation}) {
         yellow=true;
     }
 
+    const tabPackaging=[grey,green,yellow];
+    if((tabPackaging.filter(trash => trash===true)).length>=2) {
+        warning=true;
+    }
+
     if (isLoading) return <View style={styles.container}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
+                <ScrollView>
                 <View style={styles.info}>
                     <Image style={styles.image} source={{uri: productUrl}}/>
-                    <Text style={styles.text}>Le produit est-il : "{productName}" ?</Text>
+                    <Text style={styles.text}>{productName}</Text>
+                    { warning &&
+                    <View style={styles.warning}>
+                        <Text>Attention, ce produit doit être trié dans des poubelles séparées : le plastique dans la poubelle grise et le carton dans la poubelle jaune</Text>
+                    </View>}
                     { grey ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
                                 <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet ménager</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleMenagers.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleMenagers.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle grise : il doit être jeté.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
@@ -93,11 +106,14 @@ export function ResultScreen({route, navigation}) {
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
                                 <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
-                                <Text>Déchet recyclage</Text>
+                                <Text>Déchet recyclabe</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleRecyclable.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleRecyclable.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle jaune : il est recyclabe.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
@@ -109,7 +125,10 @@ export function ResultScreen({route, navigation}) {
                                 </View>
                                 <Text>Déchet en verre</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleVerre.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleVerre.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle à verre.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
@@ -128,6 +147,7 @@ export function ResultScreen({route, navigation}) {
                         <FontAwesome style={styles.icon} name='times' color={COLORS.error} size={40}/>
                     </Pressable>
                 </View>
+                </ScrollView>
             </View>
         </View>
     );
@@ -176,7 +196,8 @@ const styles = StyleSheet.create({
     },
     label: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: 10
     },
     iconCircle: {
         borderRadius: 50,
@@ -187,6 +208,7 @@ const styles = StyleSheet.create({
     image: {
         height: 200,
         width: 150,
+        borderRadius: 20
     },
     imageTrash: {
         height: 70,
@@ -208,7 +230,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 30,
         borderRadius: 30,
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: 350
     },
     infoTrash: {
         alignItems: 'center'
@@ -217,4 +240,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     },
+    information: {
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingTop:10
+    },
+    informationText: {
+        maxWidth: 150,
+        paddingLeft: 10
+    },
+    warning: {
+        backgroundColor: COLORS.background,
+        borderRadius: 20,
+        padding: 10
+    }
 });

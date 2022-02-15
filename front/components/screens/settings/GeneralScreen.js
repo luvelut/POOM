@@ -22,48 +22,48 @@ export function GeneralScreen({navigation}) {
     }
 
     return (
-        <View>
-            <Settings/>
-            <ScrollView>
-            <View style={[styles.container, themeContainerStyle]}>
-                <Text style={[styles.title, themeTextStyle]}>Réglages généraux</Text>
-                <View style={styles.profil}>
-                    <FontAwesome name='user-circle' color={COLORS.secondary} size={60}/>
+        <ScrollView>
+            <View>
+                <Settings/>
+                <View style={[styles.container, themeContainerStyle]}>
+                    <Text style={[styles.title, themeTextStyle]}>Réglages généraux</Text>
+                    <View style={styles.profil}>
+                        <FontAwesome name='user-circle' color={COLORS.secondary} size={60}/>
+                        <TouchableOpacity
+                            onPress={() => {
+                                Alert.alert("Cette fonctionnalité n'est pas encore disponible");
+                            }}
+                            style={styles.button}
+                        >
+                            <Text style={[styles.buttonText]} >Changer l'image</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <Text style={[styles.subtitle, themeTextStyle]}>Nom de l'école</Text>
+                        <View style={styles.form}>
+                            <Text style={styles.formText}>************</Text>
+                            <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
+                        </View>
+                        <Text style={[styles.subtitle, themeTextStyle]}>Mot de passe</Text>
+                        <View style={styles.form}>
+                            <Text style={styles.formText}>************</Text>
+                            <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
+                        </View>
+                        <Text style={[styles.subtitle, themeTextStyle]}>Adresse email</Text>
+                        <View style={styles.form}>
+                            <Text style={styles.formText}>************</Text>
+                            <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
+                        </View>
+                    </View>
                     <TouchableOpacity
-                        onPress={() => {
-                            Alert.alert("Cette fonctionnalité n'est pas encore disponible");
-                        }}
-                        style={styles.button}
+                        onPress={handleSignOut}
+                        style={[styles.button,styles.logout]}
                     >
-                        <Text style={[styles.buttonText]} >Changer l'image</Text>
+                        <Text style={styles.buttonText}>Déconnexion</Text>
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Nom de l'école</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
-                    </View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Mot de passe</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
-                    </View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Adresse email</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
-                    </View>
-                </View>
-                <TouchableOpacity
-                    onPress={handleSignOut}
-                    style={[styles.button,styles.logout]}
-                >
-                    <Text style={styles.buttonText}>Déconnexion</Text>
-                </TouchableOpacity>
             </View>
-            </ScrollView>
-        </View>
+        </ScrollView>
     );
 }
 

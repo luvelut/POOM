@@ -31,20 +31,19 @@ export function ListScreen({route, navigation}) {
 
     return (
         <View>
-            <Header/>
-                <View style={styles.content}>
-                    <View style={styles.list}>
-                        <FlatList
-                            ListHeaderComponent={
-                                <Text style={styles.title}>Liste des déchets</Text>
-                            }
-                            numColumns={2}
-                            data={tabWaste}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.name}
-                        />
+            <FlatList
+                ListHeaderComponent={
+                    <View>
+                        <Header/>
+                        <Text style={styles.title}>Liste des déchets</Text>
                     </View>
-                </View>
+                }
+                numColumns={2}
+                data={tabWaste}
+                columnWrapperStyle={{paddingHorizontal: 35}}
+                renderItem={renderItem}
+                keyExtractor={item => item.name}
+            />
         </View>
     );
 
@@ -59,10 +58,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         paddingVertical: 5,
-        fontWeight: 'bold'
-    },
-    content: {
-        paddingHorizontal: 35,
+        fontWeight: 'bold',
+        paddingHorizontal: 35
     },
     item: {
         alignItems: 'center',
@@ -72,14 +69,11 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         marginRight: 15,
     },
-    list: {
-        flexDirection: 'row',
-        alignItems: 'center'
-
-    },
     itemTitle: {
         paddingTop: 15,
         fontWeight: 'bold',
+        maxWidth:120,
+        textAlign: 'center'
     },
     itemDate: {
         color: COLORS.secondary,

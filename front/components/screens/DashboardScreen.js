@@ -1,4 +1,4 @@
-import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight, ScrollView} from 'react-native';
 import * as React from 'react';
 import {auth} from '../../firebase';
 import {useEffect, useState} from 'react';
@@ -41,6 +41,7 @@ export function DashboardScreen({navigation}) {
     if (isLoading) return <View style={[styles.container, themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={themeContainerStyle}>
+            <ScrollView>
             <Header/>
             <View style={[styles.content, themeContainerStyle]}>
                 <View style={styles.buttons}>
@@ -107,6 +108,7 @@ export function DashboardScreen({navigation}) {
                     </TouchableHighlight>
                 </View>
             </View>
+            </ScrollView>
         </View>
     );
 }
@@ -154,7 +156,9 @@ const styles = StyleSheet.create({
     },
     itemTitle: {
         paddingTop: 5,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        maxWidth:120,
+        textAlign: 'center'
     },
     image: {
         width: 100,

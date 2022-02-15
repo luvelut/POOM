@@ -5,6 +5,7 @@ import {FontAwesome} from "@expo/vector-icons";
 import {auth} from '../../firebase';
 import * as WasteService from "../../services/wasteService";
 import {useEffect, useState} from "react";
+import * as Progress from 'react-native-progress';
 
 export function NewTrashScreen({route, navigation}) {
     const [tabData, setTabData] = useState([]);
@@ -18,6 +19,8 @@ export function NewTrashScreen({route, navigation}) {
 
     return (
         <View style={styles.container}>
+            <View style={styles.firstSquare}/>
+            <View style={styles.secondSquare}/>
             <View style={styles.content}>
                 <Image style={styles.img} source={require('../../assets/poom.png')}/>
                 <Text style={styles.title}>Nouveau déchet !</Text>
@@ -25,9 +28,7 @@ export function NewTrashScreen({route, navigation}) {
                     <View style={styles.numberCircle}>
                         <Text style={styles.numberText}>{tabData.length}</Text>
                     </View>
-                    <View style={styles.gauge}>
-                        <View style={styles.percent}/>
-                    </View>
+                    <Progress.Bar progress={(tabData.length)/100} width={100} borderWidth={0} color={COLORS.primary} unfilledColor={COLORS.background} height={10}/>
                 </View>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Scanner')}
@@ -43,7 +44,7 @@ export function NewTrashScreen({route, navigation}) {
                     { grey ?
                             <View style={styles.label}>
                                 <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet ménager</Text>
                             </View>:
@@ -52,7 +53,7 @@ export function NewTrashScreen({route, navigation}) {
                     { yellow ?
                             <View style={styles.label}>
                                 <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet recyclabe</Text>
                             </View>:
@@ -139,26 +140,14 @@ const styles = StyleSheet.create({
     },
     numberCircle: {
         borderRadius: 50,
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingHorizontal: 10,
         borderStyle: 'solid',
         borderWidth: 4,
         borderColor: COLORS.tertiary,
         backgroundColor: 'white',
-        zIndex: 3
-    },
-    gauge : {
-        height: 10,
-        backgroundColor: COLORS.background,
-        borderRadius: 50,
-        width: 100,
-        marginLeft: -5
-    },
-    percent : {
-        height: 10,
-        width: 30,
-        backgroundColor: COLORS.primary,
-        borderRadius: 50
+        zIndex: 3,
+        marginRight: -5
     },
     evolution: {
         flexDirection: 'row',
@@ -169,5 +158,22 @@ const styles = StyleSheet.create({
         height: 130,
         width: 80,
         top: -100
+    },
+    firstSquare: {
+        backgroundColor: COLORS.quaternary,
+        height: 100,
+        width: 200,
+        borderRadius: 20,
+        position: "absolute",
+        top: 100,
+    },
+    secondSquare: {
+        backgroundColor: COLORS.quinary,
+        height: 50,
+        width: 200,
+        borderRadius: 20,
+        position: "absolute",
+        top: 80,
+        left: 50
     }
 });
