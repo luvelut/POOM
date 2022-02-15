@@ -2,7 +2,8 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import * as React from 'react';
 import {COLORS} from '../../variables/colors'
 
-export function ErrorScreen({navigation}) {
+export function ErrorScreen({navigation, route}) {
+    const { notFound } = route.params;
     return (
         <View style={styles.container}>
             <View style={styles.firstSquare}/>
@@ -10,7 +11,12 @@ export function ErrorScreen({navigation}) {
             <View style={styles.content}>
                 <Image style={styles.img} source={require('../../assets/poomerror.png')}/>
                 <Text style={styles.title}>Oups !</Text>
+                {notFound &&
+                    <Text style={styles.subtitle}>Poom n'a pas d'information sur ce déchet ... Essaie avec un autre code barre !</Text>
+                }
+                {!notFound &&
                 <Text style={styles.subtitle}>Poom s'est trompé</Text>
+                }
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Scanner')}
                 >
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: "white",
         borderRadius: 20,
-        paddingHorizontal: 70,
+        paddingHorizontal: 50,
         paddingVertical: 50,
         alignItems: 'center',
     },
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
     subtitle: {
         color: COLORS.secondary,
         fontSize: 15,
-
+        textAlign: 'center'
     },
     button: {
         backgroundColor: COLORS.primary,

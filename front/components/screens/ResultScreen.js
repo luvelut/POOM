@@ -46,6 +46,10 @@ export function ResultScreen({route, navigation}) {
             setApiData(DATA.data.product.packaging);
             setProductName(DATA.data.product.product_name_fr);
             setProductUrl(DATA.data.product.selected_images.front.display.fr);
+            console.log(apiData);
+            if(!apiData.includes('Verre') && !apiData.includes('Plastique') && !apiData.includes('Carton')) {
+                navigation.navigate('Error', {notFound: true})
+            }
             setIsLoading(false);
         } catch(err) {
             console.log("error: ", err);
@@ -119,7 +123,7 @@ export function ResultScreen({route, navigation}) {
                     </Pressable>
                     <Pressable
                         style={[styles.buttonClose, styles.rightButton]}
-                        onPress={() => navigation.navigate('Error')}
+                        onPress={() => navigation.navigate('Error', {notFound: false})}
                     >
                         <FontAwesome style={styles.icon} name='times' color={COLORS.error} size={40}/>
                     </Pressable>
