@@ -113,7 +113,7 @@ export function ResultScreen({route, navigation}) {
                 <View style={styles.buttons}>
                     <Pressable
                         style={[styles.buttonClose, styles.leftButton]}
-                        onPress={() => {setCollection(); navigation.navigate('Scanner')}}
+                        onPress={() => {setCollection(); navigation.navigate('New',{name: productName, img: productUrl, grey: grey, yellow:yellow, green:green})}}
                     >
                         <FontAwesome style={styles.icon} name='check' color={COLORS.success} size={40}/>
                     </Pressable>

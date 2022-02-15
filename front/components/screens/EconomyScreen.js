@@ -15,9 +15,9 @@ export function EconomyScreen() {
 
     useEffect(() => {
         (async () => {
-            setYellowWaste(await WasteService.getWaste('yellow'));
-            setGreenWaste(await WasteService.getWaste('green'));
-            setGreyWaste(await WasteService.getWaste('grey'));
+            setYellowWaste(await WasteService.getWasteByColor('yellow'));
+            setGreenWaste(await WasteService.getWasteByColor('green'));
+            setGreyWaste(await WasteService.getWasteByColor('grey'));
         })();
     }, []);
 

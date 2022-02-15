@@ -1,33 +1,17 @@
 import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight} from 'react-native';
 import * as React from 'react';
-import {db} from '../../firebase';
 import {auth} from '../../firebase';
 import {useEffect, useState} from 'react';
 import {Header} from '../common/Header';
 import { LinearGradient } from 'expo-linear-gradient';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import {COLORS} from "../../variables/colors";
+import * as WasteService from "../../services/wasteService";
 
 export function DashboardScreen({navigation}) {
    
     const [tabData, setTabData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    async function getUserWaste() {
-        return new Promise((resolve) => {
-            const data=[];
-            db.collection("waste").where("user", "==", auth.currentUser?.email)
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        data.push(doc.data());
-                    });
-                    resolve(data);
-                }).catch((error) => {
-                console.log("Error getting documents: ", error);
-            });
-        });
-    }
 
     const renderItem = ({item}) => (
         <View style={styles.item}>
@@ -40,7 +24,7 @@ export function DashboardScreen({navigation}) {
     useEffect(() => {
         if (!isMounted) {
             (async () => {
-                setTabData(await getUserWaste());
+                setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
                 setIsLoading(false);
             })();
         }
@@ -54,7 +38,7 @@ export function DashboardScreen({navigation}) {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-    if (isLoading) return <View style={[styles.container, styles.themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
+    if (isLoading) return <View style={[styles.container, themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={themeContainerStyle}>
             <Header/>

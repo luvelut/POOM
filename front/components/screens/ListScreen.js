@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View, FlatList, Alert, Image, Button} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Alert, Image} from 'react-native';
 import * as React from 'react';
 import {Header} from "../common/Header";
-import {FontAwesome, FontAwesome5} from "@expo/vector-icons";
+import {FontAwesome} from "@expo/vector-icons";
 import {COLORS} from '../../variables/colors'
 
 export function ListScreen({route, navigation}) {
@@ -32,17 +32,19 @@ export function ListScreen({route, navigation}) {
     return (
         <View>
             <Header/>
-            <View style={styles.content}>
-                <Text style={styles.title}>Liste des déchets</Text>
-                <View style={styles.list}>
-                    <FlatList
-                        numColumns={2}
-                        data={tabWaste}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.name}
-                    />
+                <View style={styles.content}>
+                    <View style={styles.list}>
+                        <FlatList
+                            ListHeaderComponent={
+                                <Text style={styles.title}>Liste des déchets</Text>
+                            }
+                            numColumns={2}
+                            data={tabWaste}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.name}
+                        />
+                    </View>
                 </View>
-            </View>
         </View>
     );
 

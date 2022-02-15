@@ -1,13 +1,16 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import * as React from 'react';
 import {COLORS} from '../../variables/colors'
 
 export function ErrorScreen({navigation}) {
     return (
         <View style={styles.container}>
+            <View style={styles.firstSquare}/>
+            <View style={styles.secondSquare}/>
             <View style={styles.content}>
+                <Image style={styles.img} source={require('../../assets/poomerror.png')}/>
                 <Text style={styles.title}>Oups !</Text>
-                <Text>Poom s'est trompé</Text>
+                <Text style={styles.subtitle}>Poom s'est trompé</Text>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Scanner')}
                 >
@@ -23,19 +26,25 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: COLORS.background
+        backgroundColor: COLORS.background,
+        paddingTop: 100
     },
     content: {
         backgroundColor: "white",
         borderRadius: 20,
         paddingHorizontal: 70,
         paddingVertical: 50,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 10
+    },
+    subtitle: {
+        color: COLORS.secondary,
+        fontSize: 15,
+
     },
     button: {
         backgroundColor: COLORS.primary,
@@ -47,5 +56,28 @@ const styles = StyleSheet.create({
     textButton: {
         color: 'white',
         fontWeight: 'bold'
+    },
+    img: {
+        position: 'absolute',
+        height: 140,
+        width: 100,
+        top: -130
+    },
+    firstSquare: {
+        backgroundColor: COLORS.quaternary,
+        height: 100,
+        width: 200,
+        borderRadius: 20,
+        position: "absolute",
+        top: 170,
+    },
+    secondSquare: {
+        backgroundColor: COLORS.quinary,
+        height: 50,
+        width: 200,
+        borderRadius: 20,
+        position: "absolute",
+        top: 150,
+        left: 50
     }
 });

@@ -3,6 +3,8 @@ export const COLORS = {
     background: '#F4F4FC',
     secondary: '#A6A6D5',
     tertiary: '#E5E5FB',
+    quaternary: '#CCCEFF',
+    quinary: '#B2B4F5',
     success: '#3CB881',
     error: '#FF3D5E',
     yellow_trash: '#F9C334',

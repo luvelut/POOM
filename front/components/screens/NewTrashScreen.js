@@ -2,13 +2,33 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as React from 'react';
 import {COLORS} from "../../variables/colors";
 import {FontAwesome} from "@expo/vector-icons";
+import {auth} from '../../firebase';
+import * as WasteService from "../../services/wasteService";
+import {useEffect, useState} from "react";
 
-export function NewTrashScreen() {
+export function NewTrashScreen({route, navigation}) {
+    const [tabData, setTabData] = useState([]);
+    const { name, img, grey, yellow, green } = route.params;
+
+    useEffect(() => {
+        (async () => {
+            setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
+        })();
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
+                <Image style={styles.img} source={require('../../assets/poom.png')}/>
                 <Text style={styles.title}>Nouveau déchet !</Text>
-                <Text>nombre de déchet et jauge</Text>
+                <View style={styles.evolution}>
+                    <View style={styles.numberCircle}>
+                        <Text style={styles.numberText}>{tabData.length}</Text>
+                    </View>
+                    <View style={styles.gauge}>
+                        <View style={styles.percent}/>
+                    </View>
+                </View>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Scanner')}
                 >
@@ -16,17 +36,37 @@ export function NewTrashScreen() {
                 </TouchableOpacity>
             </View>
             <View style={styles.trashContent}>
-                <View style={styles.imgContainer}>
-                    <Image style={styles.img}/>
-                </View>
+                <Image style={styles.image} source={{uri: img}}/>
                 <View>
-                    <Text>Tube de colle</Text>
-                    <View style={styles.label}>
-                        <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash}>
-                            <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
-                        </View>
-                        <Text>Déchet ménager</Text>
-                    </View>
+                    <Text style={styles.subtitle}>{name}</Text>
+
+                    { grey ?
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                </View>
+                                <Text>Déchet ménager</Text>
+                            </View>:
+                        <View/>
+                    }
+                    { yellow ?
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                </View>
+                                <Text>Déchet recyclabe</Text>
+                            </View>:
+                        <View/>
+                    }
+                    { green ?
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
+                                </View>
+                                <Text>Déchet en verre</Text>
+                            </View> :
+                        <View/>
+                    }
                 </View>
             </View>
         </View>
@@ -38,7 +78,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: COLORS.background
+        backgroundColor: COLORS.background,
+        paddingTop: 100
     },
     content: {
         backgroundColor: "white",
@@ -51,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: "white",
         borderRadius: 20,
-        paddingHorizontal: 80,
+        paddingHorizontal: 30,
         paddingVertical: 20,
         alignItems: 'center',
         marginTop: 20
@@ -82,4 +123,51 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    image: {
+        height: 80,
+        width: 80,
+        borderRadius: 50,
+        marginRight: 10
+    },
+    subtitle: {
+        fontWeight: 'bold',
+        fontSize: 15
+    },
+    numberText: {
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    numberCircle: {
+        borderRadius: 50,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderStyle: 'solid',
+        borderWidth: 4,
+        borderColor: COLORS.tertiary,
+        backgroundColor: 'white',
+        zIndex: 3
+    },
+    gauge : {
+        height: 10,
+        backgroundColor: COLORS.background,
+        borderRadius: 50,
+        width: 100,
+        marginLeft: -5
+    },
+    percent : {
+        height: 10,
+        width: 30,
+        backgroundColor: COLORS.primary,
+        borderRadius: 50
+    },
+    evolution: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    img: {
+        position: 'absolute',
+        height: 130,
+        width: 80,
+        top: -100
+    }
 });
