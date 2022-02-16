@@ -47,28 +47,28 @@ export function DashboardScreen({navigation}) {
                 <View style={styles.buttons}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Economy')}>
-                    <LinearGradient
-                        colors={['rgb(165,107,253)', 'transparent']}
-                        style={styles.buttonGradienteQuantiteesEco}
-                        start={{ x: 1, y: 1 }}
-                        end={{ x: 1, y: 0 }}
-                    >
-                        <Text style={styles.buttonText}>Quantitées économisées</Text>
-                    </LinearGradient> 
-                        <Image style={styles.buttonQuantiteesEco} source={require('../../assets/bouton/quantitees_economisees.png')}/>
+                        <LinearGradient
+                            colors={['rgb(165,107,253)', 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Quantitées économisées</Text>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/bouton/quantitees_economisees.png')}/>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
                         onPress={() => Alert.alert("En cours de développement")}>
                     <LinearGradient
                         colors={['rgb(165,107,253)', 'transparent']}
-                        style={styles.buttonGradientSuivi}
+                        style={styles.buttonGradient}
                         start={{ x: 1, y: 1 }}
                         end={{ x: 1, y: 0 }}
                     >
                         <Text style={styles.buttonText}>Suivi composte</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonSuivi} source={require('../../assets/bouton/composte.png')}/>
+                        <Image style={styles.buttonImage} source={require('../../assets/bouton/composte.png')}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={[styles.title, themeTextStyle]}>Badges</Text>
@@ -96,6 +96,7 @@ export function DashboardScreen({navigation}) {
                         renderItem={renderItem}
                         keyExtractor={item => item.name}
                         scrollEnabled={false}
+                        columnWrapperStyle={{justifyContent: 'flex-end'}}
                     />
                     <TouchableHighlight style={styles.icon}
                                         underlayColor="#ffffff"
@@ -114,10 +115,6 @@ export function DashboardScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center"
-    },
     darkContainer: {
         backgroundColor: COLORS.dark_light,
     },
@@ -130,10 +127,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         paddingVertical: 5,
+        paddingHorizontal: 15,
         fontWeight: 'bold'
-    },
-    content: {
-        paddingHorizontal: 35,
     },
     item: {
         alignItems: 'center',
@@ -145,14 +140,13 @@ const styles = StyleSheet.create({
     },
     list: {
         flexDirection: 'row',
-        alignItems: 'center'
-
+        alignItems: 'center',
+        paddingRight: 25
     },
     icon: {
         backgroundColor: 'white',
         borderRadius: 40,
         padding: 10,
-        marginLeft: 5
     },
     itemTitle: {
         paddingTop: 5,
@@ -168,7 +162,8 @@ const styles = StyleSheet.create({
     badgeSection: {
         flexDirection: 'row',
         paddingBottom: 15,
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: "center"
     },
     badgeList: {
         flexDirection: 'row',
@@ -187,7 +182,8 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flexDirection:'row',
-        paddingBottom: 10
+        paddingBottom: 10,
+        justifyContent:'space-around'
     },
     buttonText: {
         bottom : 20,
@@ -197,33 +193,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    buttonQuantiteesEco:{
-        left:1,
-        right:20,
+    buttonImage:{
         width: 160,
         height: 100,
         borderRadius: 25,
     },
-    buttonGradienteQuantiteesEco:{
+    buttonGradient:{
         position: 'absolute',
         left:1,
         right:20,
-        width: 160,
-        height: 100,
-        borderRadius: 25,
-        zIndex:1,
-    },
-    buttonSuivi:{
-        right:1,
-        left:20,
-        width: 160,
-        height: 100,
-        borderRadius: 25,
-    },
-    buttonGradientSuivi:{
-        position: 'absolute',
-        right:1,
-        left:20,
         width: 160,
         height: 100,
         borderRadius: 25,
