@@ -11,5 +11,9 @@ export const COLORS = {
     green_trash: '#10956C',
     grey_trash: '#B1B8BC',
     dark_light: '#394153',
-    dark: '#242c40'
+    dark: '#242c40',
+    gradient_scanner: 'rgb(107,107,253)',
+    gradient_game: 'rgb(253,107,107)',
+    gradient_waste: 'rgb(61,207,182)',
+    gradient_lesson: 'rgb(165,107,253)'
 }
