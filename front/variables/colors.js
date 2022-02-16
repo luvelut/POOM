@@ -5,6 +5,7 @@ export const COLORS = {
     tertiary: '#E5E5FB',
     quaternary: '#CCCEFF',
     quinary: '#B2B4F5',
+    senary: '#E0E0FC',
     success: '#3CB881',
     error: '#FF3D5E',
     yellow_trash: '#F9C334',

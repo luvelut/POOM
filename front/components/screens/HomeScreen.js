@@ -84,16 +84,11 @@ export function HomeScreen({navigation}) {
     )
 }
 
-export default HomeScreen
-
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        paddingTop: 20
-    },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingTop: 20
     },
     lightContainer: {
         backgroundColor: COLORS.background,
