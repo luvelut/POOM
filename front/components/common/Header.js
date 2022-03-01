@@ -1,6 +1,6 @@
 import {Alert, FlatList, StyleSheet, Text, useColorScheme, TouchableHighlight, View} from 'react-native';
 import * as React from 'react';
-import {auth} from '../../firebase';
+import {auth} from '../../services/Firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/core";
 import {COLORS} from '../../variables/colors'

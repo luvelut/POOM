@@ -2,7 +2,7 @@ import {ActivityIndicator, Alert, Image, Pressable, StyleSheet, Text, Vibration,
 import * as React from 'react';
 import {FontAwesome} from "@expo/vector-icons";
 import {useState} from "react";
-import {auth, db} from "../../firebase";
+import {auth, db} from "../../services/Firebase";
 import axios from "axios";
 import {COLORS} from '../../variables/colors'
 

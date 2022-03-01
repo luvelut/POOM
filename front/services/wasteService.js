@@ -1,4 +1,4 @@
-import {auth, db} from "../firebase";
+import {auth, db} from "./Firebase";
 
 export async function getWasteByColor(color) {
     return new Promise((resolve) => {

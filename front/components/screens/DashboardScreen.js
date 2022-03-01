@@ -1,6 +1,6 @@
 import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight, ScrollView} from 'react-native';
 import * as React from 'react';
-import {auth} from '../../firebase';
+import {auth} from '../../services/Firebase';
 import {useEffect, useState} from 'react';
 import {Header} from '../common/Header';
 import { LinearGradient } from 'expo-linear-gradient';

@@ -1,7 +1,6 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../../firebase'
+import React, { useState } from 'react'
+import { KeyboardAvoidingView, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { auth } from '../../services/Firebase'
 import {COLORS} from '../../variables/colors'
 
 const image = { uri: "https://reactjs.org/favicon.png" };
@@ -9,18 +8,6 @@ const image = { uri: "https://reactjs.org/favicon.png" };
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const navigation = useNavigation()
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.navigate("Home")
-      }
-    })
-
-    return unsubscribe
-  }, [])
 
   const handleSignUp = () => {
     auth
@@ -33,11 +20,13 @@ const LoginScreen = () => {
   }
 
   const handleLogin = () => {
+      console.log("HANDLE LOGIN");
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Connecté avec :', user.email);
+
       })
       .catch(error => alert(error.message))
   }

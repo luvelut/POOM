@@ -2,7 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, useColorScheme ,View, Alert, ScrollV
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
 import { FontAwesome } from '@expo/vector-icons';
-import {auth} from "../../../firebase";
+import {auth} from "../../../services/Firebase";
 import {COLORS} from '../../../variables/colors'
 
 export function GeneralScreen({navigation}) {

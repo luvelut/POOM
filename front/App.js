@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Button, useColorScheme, TouchableHighlight } from 'react-native';
 import { StatusBar } from 'expo-status-bar'; // automatically switches bar style based on theme!
 import { NavigationContainer } from '@react-navigation/native';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from './components/screens/HomeScreen';
 import {ScannerScreen} from "./components/screens/ScannerScreen";
 import {DashboardScreen} from "./components/screens/DashboardScreen";
@@ -19,30 +20,64 @@ import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
 import {ErrorScreen} from "./components/screens/ErrorScreen";
 import {NewTrashScreen} from "./components/screens/NewTrashScreen";
+import { firebase } from "./services/Firebase";
 
-const Tab = createBottomTabNavigator();
 
-export default function App() {
+const App = () => {
+
+    const [connected, isConnected] = useState(false);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            isConnected(true);
+            console.log(user);
+        } else {
+            console.log("logout no user");
+            isConnected(false);
+        }
+    });
+
+    const Auth = createStackNavigator();
+    const AuthStack = () => {
+        return(
+        <Auth.Navigator
+            initialRouteName='Login'
+            screenOptions={{ headerShown: false }}
+        >
+            <Tab.Screen name="Login" component={LoginScreen} />
+        </Auth.Navigator>
+        );
+    }
+
+    const Tab = createBottomTabNavigator();
+    const TabStack = () => {
+        return (
+            <Tab.Navigator
+                style={styles.main}
+                backBehavior='history'
+                tabBar={(props) => <Footer {...props}  />}
+                screenOptions={{ headerShown: false }}
+            >
+            <Tab.Screen name="Scanner" component={ScannerScreen} />
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Dashboard" component={DashboardScreen} />
+            <Tab.Screen name="Game" component={GameScreen} />
+            <Tab.Screen name="Lesson" component={LessonScreen} />
+            <Tab.Screen name="List" component={ListScreen} />
+            <Tab.Screen name={"GeneralSettings"} component={GeneralScreen} />
+            <Tab.Screen name={"LicenseSettings"} component={LicenseScreen} />
+            <Tab.Screen name={"SoundSettings"} component={SoundScreen} />
+            <Tab.Screen name={"Result"} component={ResultScreen} />
+            <Tab.Screen name={"Badge"} component={BadgeScreen} />
+            <Tab.Screen name={"Economy"} component={EconomyScreen} />
+            <Tab.Screen name={"Error"} component={ErrorScreen} />
+            <Tab.Screen name={"New"} component={NewTrashScreen} />
+        </Tab.Navigator>);
+    }
 
   return (
       <NavigationContainer>
-          <Tab.Navigator style={styles.main} backBehavior='history' initialRouteName='Login'  tabBar={(props) => <Footer {...props}  />} screenOptions={{ headerShown: false }} >
-              <Tab.Screen name="Scanner" component={ScannerScreen} />
-              <Tab.Screen name="Home" component={HomeScreen} />
-              <Tab.Screen name="Dashboard" component={DashboardScreen} />
-              <Tab.Screen name="Game" component={GameScreen} />
-              <Tab.Screen name="Lesson" component={LessonScreen} />
-              <Tab.Screen name="Login" component={LoginScreen} />
-              <Tab.Screen name="List" component={ListScreen} />
-              <Tab.Screen name={"GeneralSettings"} component={GeneralScreen} />
-              <Tab.Screen name={"LicenseSettings"} component={LicenseScreen} />
-              <Tab.Screen name={"SoundSettings"} component={SoundScreen} />
-              <Tab.Screen name={"Result"} component={ResultScreen} />
-              <Tab.Screen name={"Badge"} component={BadgeScreen} />
-              <Tab.Screen name={"Economy"} component={EconomyScreen} />
-              <Tab.Screen name={"Error"} component={ErrorScreen} />
-              <Tab.Screen name={"New"} component={NewTrashScreen} />
-          </Tab.Navigator>
+          {connected ?  <TabStack /> : <AuthStack /> }
       </NavigationContainer>
   );
 }
@@ -52,3 +87,5 @@ const styles = StyleSheet.create({
         flex:1,
     },
 });
+
+export default App;

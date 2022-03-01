@@ -2,7 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as React from 'react';
 import {COLORS} from "../../variables/colors";
 import {FontAwesome} from "@expo/vector-icons";
-import {auth} from '../../firebase';
+import {auth} from '../../services/Firebase';
 import * as WasteService from "../../services/wasteService";
 import {useEffect, useState} from "react";
 import * as Progress from 'react-native-progress';
