@@ -9,7 +9,7 @@ import {DashboardScreen} from "./components/screens/DashboardScreen";
 import {Footer} from "./components/navigator/Footer"
 import {GameScreen} from "./components/screens/GameScreen";
 import {LessonScreen} from "./components/screens/LessonScreen";
-import {LoginScreen} from './components/screens/LoginScreen';
+import {LoginScreen} from './components/screens/login/LoginScreen';
 import {ListScreen} from "./components/screens/ListScreen";
 import {BadgeScreen} from "./components/screens/BadgeScreen";
 import {ResultScreen} from "./components/screens/ResultScreen";
@@ -19,8 +19,9 @@ import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
 import {ErrorScreen} from "./components/screens/ErrorScreen";
 import {NewTrashScreen} from "./components/screens/NewTrashScreen";
-import {SignUpScreen} from "./components/screens/SignUpScreen";
+import {SignUpScreen} from "./components/screens/login/SignUpScreen";
 import { firebase } from "./services/Firebase";
+import {ResetScreen} from "./components/screens/login/ResetScreen";
 
 const App = () => {
 
@@ -45,6 +46,7 @@ const App = () => {
         >
             <Auth.Screen name="Login" component={LoginScreen} />
             <Auth.Screen name="SignUp" component={SignUpScreen} />
+            <Auth.Screen name="Reset" component={ResetScreen} />
         </Auth.Navigator>
         );
     }

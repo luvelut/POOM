@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../../services/Firebase'
-import {COLORS} from '../../variables/colors'
+import { KeyboardAvoidingView, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { auth } from '../../../services/Firebase'
+import {styles} from '../../../styles/LoginStyle'
 
 export function SignUpScreen({ navigation }) {
     const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ export function SignUpScreen({ navigation }) {
             style={styles.container}
             behavior="padding"
         >
-            <Image style={styles.image} source={require('../../assets/banniere_connexion.png')} />
+            <Image style={styles.image} source={require('../../../assets/banniere_connexion.png')} />
             <View style={styles.bas}>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -51,57 +51,3 @@ export function SignUpScreen({ navigation }) {
         </KeyboardAvoidingView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    inputContainer: {
-        width: '80%',
-        marginTop: 40,
-    },
-    image: {
-        position:'absolute',
-        top : 0,
-        height: 305,
-        width: 768,
-    },
-    bas: {
-        backgroundColor: COLORS.background,
-        borderRadius : 20,
-        alignItems : 'center',
-        position: 'absolute',
-        top: 290,
-        left: 0,
-        width: '100%',
-        height: '50%',
-    },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 35,
-        marginTop: 35,
-    },
-    buttonContainer: {
-        width: '60%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 40,
-    },
-    button: {
-        backgroundColor: COLORS.primary,
-        width: '100%',
-        padding: 15,
-        borderRadius: 35,
-        alignItems: 'center',
-        marginTop: 35,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 20,
-    },
-})
