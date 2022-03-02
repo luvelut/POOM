@@ -3,24 +3,11 @@ import { KeyboardAvoidingView, Image, StyleSheet, Text, TextInput, TouchableOpac
 import { auth } from '../../services/Firebase'
 import {COLORS} from '../../variables/colors'
 
-const image = { uri: "https://reactjs.org/favicon.png" };
-
-const LoginScreen = () => {
+export function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Inscrits avec :', user.email);
-      })
-      .catch(error => alert(error.message))
-  }
-
   const handleLogin = () => {
-      console.log("HANDLE LOGIN");
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
@@ -30,7 +17,6 @@ const LoginScreen = () => {
       })
       .catch(error => alert(error.message))
   }
-
 
      return (
           <KeyboardAvoidingView 
@@ -62,7 +48,7 @@ const LoginScreen = () => {
                <Text style={styles.buttonText}>Connexion</Text>
           </TouchableOpacity>
           <TouchableOpacity
-               onPress={handleSignUp}
+              onPress={() => navigation.navigate('SignUp')}
                style={[styles.button, styles.buttonOutline]}
           >
                <Text style={styles.buttonOutlineText}>Inscription</Text>
@@ -72,8 +58,6 @@ const LoginScreen = () => {
      </KeyboardAvoidingView>
   )
 }
-
-export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -94,7 +78,6 @@ const styles = StyleSheet.create({
   bas: {
   backgroundColor: COLORS.background,
   borderRadius : 20,
-  //width: '100%',
   alignItems : 'center',
   position: 'absolute',
     top: 290,
@@ -113,7 +96,7 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 10,
   },
   button: {
     backgroundColor: COLORS.primary,
@@ -121,14 +104,13 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 35,
     alignItems: 'center',
-    marginTop: 35,
+    marginTop: 30,
   },
   buttonOutline: {
     backgroundColor: 'white',
-    //marginTop: 5,
     borderColor: COLORS.primary,
     borderWidth: 2,
-    marginTop: 30,
+    marginTop: 10,
   },
   buttonText: {
     color: 'white',

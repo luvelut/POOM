@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, Button, useColorScheme, TouchableHighlight } from 'react-native';
-import { StatusBar } from 'expo-status-bar'; // automatically switches bar style based on theme!
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from './components/screens/HomeScreen';
@@ -10,7 +9,7 @@ import {DashboardScreen} from "./components/screens/DashboardScreen";
 import {Footer} from "./components/navigator/Footer"
 import {GameScreen} from "./components/screens/GameScreen";
 import {LessonScreen} from "./components/screens/LessonScreen";
-import LoginScreen from './components/screens/LoginScreen';
+import {LoginScreen} from './components/screens/LoginScreen';
 import {ListScreen} from "./components/screens/ListScreen";
 import {BadgeScreen} from "./components/screens/BadgeScreen";
 import {ResultScreen} from "./components/screens/ResultScreen";
@@ -20,8 +19,8 @@ import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
 import {ErrorScreen} from "./components/screens/ErrorScreen";
 import {NewTrashScreen} from "./components/screens/NewTrashScreen";
+import {SignUpScreen} from "./components/screens/SignUpScreen";
 import { firebase } from "./services/Firebase";
-
 
 const App = () => {
 
@@ -44,7 +43,8 @@ const App = () => {
             initialRouteName='Login'
             screenOptions={{ headerShown: false }}
         >
-            <Tab.Screen name="Login" component={LoginScreen} />
+            <Auth.Screen name="Login" component={LoginScreen} />
+            <Auth.Screen name="SignUp" component={SignUpScreen} />
         </Auth.Navigator>
         );
     }
