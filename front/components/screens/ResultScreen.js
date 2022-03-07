@@ -1,9 +1,10 @@
-import {ActivityIndicator, Alert, Image, Pressable, StyleSheet, Text, Vibration, View} from 'react-native';
+import {ActivityIndicator, Alert, Image, Pressable, StyleSheet, Text, Vibration, View, ScrollView} from 'react-native';
 import * as React from 'react';
 import {FontAwesome} from "@expo/vector-icons";
 import {useState} from "react";
-import {auth, db} from "../../firebase";
+import {auth, db} from "../../services/Firebase";
 import axios from "axios";
+import {COLORS} from '../../variables/colors'
 
 export function ResultScreen({route, navigation}) {
     const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +15,7 @@ export function ResultScreen({route, navigation}) {
     let grey=false;
     let yellow=false;
     let green=false;
+    let warning=false;
 
     if(!number) {
         Alert.alert("Un problème est survenu lors du scan du code barre... Réésayez");
@@ -23,7 +25,7 @@ export function ResultScreen({route, navigation}) {
     async function setCollection() {
         const randomId=Math.floor(Math.random() * 100);
         const cityRef = db.collection('waste').doc(randomId.toString());
-
+        if(!productUrl) { setProductUrl('https://via.placeholder.com/150/A6A6D5/FFFFFF/?text=Image') }
         const res = await cityRef.set({
             name: productName,
             packaging: apiData,
@@ -52,6 +54,9 @@ export function ResultScreen({route, navigation}) {
     }
 
     getProductData(number);
+    if(!apiData.includes('Verre') && !apiData.includes('Plastique') && !apiData.includes('Carton')) {
+        navigation.navigate('Error', {notFound: true})
+    }
 
     if(apiData.includes('Plastique')) {
         grey=true;
@@ -65,46 +70,65 @@ export function ResultScreen({route, navigation}) {
         yellow=true;
     }
 
+    const tabPackaging=[grey,green,yellow];
+    if((tabPackaging.filter(trash => trash===true)).length>=2) {
+        warning=true;
+    }
+
     if (isLoading) return <View style={styles.container}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
+                <ScrollView>
                 <View style={styles.info}>
                     <Image style={styles.image} source={{uri: productUrl}}/>
-                    <Text style={styles.text}>Le produit est-il : "{productName}" ?</Text>
+                    <Text style={styles.text}>{productName}</Text>
+                    { warning &&
+                    <View style={styles.warning}>
+                        <Text>Attention, ce produit doit être trié dans des poubelles séparées : le plastique dans la poubelle grise et le carton dans la poubelle jaune</Text>
+                    </View>}
                     { grey ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="grey" >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet ménager</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleMenagers.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleMenagers.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle grise : il doit être jeté.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
                     { yellow ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="#FECE00" >
-                                    <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
-                                <Text>Déchet recyclage</Text>
+                                <Text>Déchet recyclabe</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleRecyclable.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleRecyclable.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle jaune : il est recyclabe.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
                     { green ?
                         <View style={styles.infoTrash}>
                             <View style={styles.label}>
-                                <View style={styles.iconCircle} backgroundColor="green" >
+                                <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
                                     <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                                 </View>
                                 <Text>Déchet en verre</Text>
                             </View>
-                            <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleVerre.png')}/>
+                            <View style={styles.information}>
+                                <Image style={styles.imageTrash} source={require('../../assets/poubelles/poubelleVerre.png')}/>
+                                <Text style={styles.informationText}>Ce déchet va dans la poubelle à verre.</Text>
+                            </View>
                         </View>:
                         <View/>
                     }
@@ -112,17 +136,18 @@ export function ResultScreen({route, navigation}) {
                 <View style={styles.buttons}>
                     <Pressable
                         style={[styles.buttonClose, styles.leftButton]}
-                        onPress={() => {setCollection(); navigation.navigate('Scanner')}}
+                        onPress={() => {setCollection(); navigation.navigate('New',{name: productName, img: productUrl, grey: grey, yellow:yellow, green:green})}}
                     >
-                        <FontAwesome style={styles.icon} name='check' color="#3CB881" size={40}/>
+                        <FontAwesome style={styles.icon} name='check' color={COLORS.success} size={40}/>
                     </Pressable>
                     <Pressable
                         style={[styles.buttonClose, styles.rightButton]}
-                        onPress={() => navigation.navigate('Scanner')}
+                        onPress={() => navigation.navigate('Error', {notFound: false})}
                     >
-                        <FontAwesome style={styles.icon} name='times' color="#FF3D5E" size={40}/>
+                        <FontAwesome style={styles.icon} name='times' color={COLORS.error} size={40}/>
                     </Pressable>
                 </View>
+                </ScrollView>
             </View>
         </View>
     );
@@ -134,7 +159,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
-        backgroundColor: "#F4F4FC"
+        backgroundColor: COLORS.background
     },
     modalView: {
         margin: 20,
@@ -171,7 +196,8 @@ const styles = StyleSheet.create({
     },
     label: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: 10
     },
     iconCircle: {
         borderRadius: 50,
@@ -182,6 +208,7 @@ const styles = StyleSheet.create({
     image: {
         height: 200,
         width: 150,
+        borderRadius: 20
     },
     imageTrash: {
         height: 70,
@@ -203,7 +230,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 30,
         borderRadius: 30,
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: 350
     },
     infoTrash: {
         alignItems: 'center'
@@ -212,4 +240,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     },
+    information: {
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingTop:10
+    },
+    informationText: {
+        maxWidth: 150,
+        paddingLeft: 10
+    },
+    warning: {
+        backgroundColor: COLORS.background,
+        borderRadius: 20,
+        padding: 10
+    }
 });

@@ -2,112 +2,99 @@ import {StyleSheet, Text, View, useColorScheme, Image, TouchableOpacity} from 'r
 import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Header } from '../common/Header';
+import {COLORS} from '../../variables/colors'
 
 export function HomeScreen({navigation}) {
     
     const colorScheme = useColorScheme();
-    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     return (
         <View>
             <Header/>
-        <View style={ [styles.container, styles.themeContainerStyle]}>
-            <TouchableOpacity
-            title="Scanner"
-            onPress={() => navigation.navigate('Scanner')}>
-            
-            
-            <LinearGradient
-                colors={['rgb(107,107,253)', 'transparent']}
-                style={styles.buttonGradientScanner}
-                start={{ x: 1, y: 1 }}
-                end={{ x: 1, y: 0 }}
-            >
-            <Text style={[styles.buttonText, styles.themeTextStyle]}>Scanner</Text>
-            </LinearGradient> 
-            
-            <Image style={styles.buttonScanner} source={require('../../assets/Scanner.png')}/>
-             
-            </TouchableOpacity>
+            <View style={ [styles.container, themeContainerStyle]}>
+                <View style={styles.row}>
+                    <TouchableOpacity
+                        style={styles.card}
+                        title="Scanner"
+                        onPress={() => navigation.navigate('Scanner')}>
+                        <LinearGradient
+                            colors={[COLORS.gradient_scanner, 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Scanner</Text>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/home/Scanner.png')}/>
+                    </TouchableOpacity>
 
-            <TouchableOpacity
-            title="Jeux"
-            onPress={() => navigation.navigate('Game')}
-            >
-            <LinearGradient
-                colors={['rgb(253,107,107)', 'transparent']}
-                style={styles.buttonGradientJeux}
-                start={{ x: 1, y: 1 }}
-                end={{ x: 1, y: 0 }}
-            >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Jeux</Text>
-            </LinearGradient> 
-            <Image style={styles.buttonJeux} source={require('../../assets/Jeux.png')}/>
-            </TouchableOpacity>
-                
-            <TouchableOpacity
-            title="Mes déchets"
-            onPress={() => navigation.navigate('Dashboard')}
-            >
-            <LinearGradient
-                colors={['rgb(61,207,182)', 'transparent']}
-                style={styles.buttonGradientDechets}
-                start={{ x: 1, y: 1 }}
-                end={{ x: 1, y: 0 }}
-            >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Nos déchets</Text>
-            </LinearGradient>
-            <Image style={styles.buttonDechets} source={require('../../assets/Dechets.png')}/>
-            </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.card}
+                        title="Jeux"
+                        onPress={() => navigation.navigate('Game')}
+                    >
+                        <LinearGradient
+                            colors={[COLORS.gradient_game, 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Jeux</Text>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/home/Jeux.png')}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.row}>
+                    <TouchableOpacity
+                        style={styles.card}
+                        title="Mes déchets"
+                        onPress={() => navigation.navigate('Dashboard')}
+                    >
+                        <LinearGradient
+                            colors={[COLORS.gradient_waste, 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Nos déchets</Text>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/home/Dechets.png')}/>
+                    </TouchableOpacity>
 
-            <TouchableOpacity
-            title="Cours"
-            onPress={() => navigation.navigate('Lesson')}
-            >
-            <LinearGradient
-                colors={['rgb(165,107,253)', 'transparent']}
-                style={styles.buttonGradientPedagogie}
-                start={{ x: 1, y: 1 }}
-                end={{ x: 1, y: 0 }}
-            >
-                <Text style={[styles.buttonText, styles.themeTextStyle]}>Supports pédagogiques</Text>
+                    <TouchableOpacity
+                        style={styles.card}
+                        title="Cours"
+                        onPress={() => navigation.navigate('Lesson')}
+                    >
+                        <LinearGradient
+                            colors={[COLORS.gradient_lesson, 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Supports pédagogiques</Text>
 
-            </LinearGradient>
-            <Image style={styles.buttonPedagogie} source={require('../../assets/pedagogique.png')}/>
-            </TouchableOpacity>
-        </View>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/home/pedagogique.png')}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     )
 }
 
-export default HomeScreen
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingTop: 20
     },
     lightContainer: {
-        backgroundColor: '#d0d0c0',
+        backgroundColor: COLORS.background,
     },
     darkContainer: {
-        backgroundColor: '#394153',
-    },
-    lightThemeText: {
-        bottom : 20,
-        left : 15,
-        position: 'absolute',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-    darkThemeText: {
-        bottom : 20,
-        left : 15,
-        position: 'absolute',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#d0d0c0',
+        backgroundColor: COLORS.dark_light,
     },
     buttonText: {
         bottom : 20,
@@ -117,77 +104,23 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    buttonScanner: {
-        position: 'absolute',
-        top: 90,
-        left: 7,
+    card: {
+        width: 170,
+        height: 170,
+        borderRadius: 35,
+    },
+    buttonImage: {
         width: 200,
         height: 200,
-        borderRadius: 35,
         opacity: 1,
-        
-    },
-    buttonGradientScanner:{
+        bottom : -13,
+        left : -12,
         position: 'absolute',
-        top: 100,
-        left: 20,
+    },
+    buttonGradient:{
         width: 175,
         height: 175,
         borderRadius: 25,
         zIndex:1,
-    },
-    buttonJeux: {
-        position: 'absolute',
-        top: 90,
-        right: 10,
-        width: 200,
-        height: 200,
-        borderRadius: 35,
-        opacity: 1,
-    },
-    buttonGradientJeux: {
-        position: 'absolute',
-        top: 100,
-        right: 22,
-        width: 175,
-        height: 175,
-        borderRadius: 25,
-        zIndex:1,
-    },
-    buttonDechets: {
-        position: 'absolute',
-        top: 285,
-        left: 7,
-        width: 200,
-        height: 200,
-        borderRadius: 35,
-        opacity: 1,
-    },
-    buttonGradientDechets: {
-        position: 'absolute',
-        top: 300,
-        left: 20,
-        width: 175,
-        height: 175,
-        borderRadius: 25,
-        zIndex:1,
-    },
-    buttonPedagogie: {
-        position: 'absolute',
-        top: 285,
-        right: 10,
-        width: 200,
-        height: 200,
-        borderRadius: 35,
-        opacity: 1,
-    },
-    buttonGradientPedagogie: {
-        position: 'absolute',
-        top: 300,
-        right: 22,
-        width: 175,
-        height: 175,
-        borderRadius: 25,
-        zIndex: 1,
     }
 })

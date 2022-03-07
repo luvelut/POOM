@@ -1,7 +1,8 @@
-import {StyleSheet, Text, View, FlatList, Alert, Image, Button} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Alert, Image} from 'react-native';
 import * as React from 'react';
 import {Header} from "../common/Header";
-import {FontAwesome, FontAwesome5} from "@expo/vector-icons";
+import {FontAwesome} from "@expo/vector-icons";
+import {COLORS} from '../../variables/colors'
 
 export function ListScreen({route, navigation}) {
     const { tabWaste } = route.params;
@@ -14,15 +15,15 @@ export function ListScreen({route, navigation}) {
             <Text style={styles.itemTitle}>{item.name}</Text>
             <Text style={styles.itemDate}>{item.date.toString()}</Text>
             {item.trashRecyclabe &&
-                    <View style={styles.iconCircle} backgroundColor="#FECE00" >
+                    <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
                         <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                     </View>}
             {item.trashVerre &&
-            <View style={styles.iconCircle} backgroundColor="green" >
+            <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
                 <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
             </View>}
             {item.trashMenager &&
-            <View style={styles.iconCircle} backgroundColor="grey" >
+            <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
                 <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
             </View>}
         </View>
@@ -30,18 +31,19 @@ export function ListScreen({route, navigation}) {
 
     return (
         <View>
-            <Header/>
-            <View style={styles.content}>
-                <Text style={styles.title}>Liste des déchets</Text>
-                <View style={styles.list}>
-                    <FlatList
-                        numColumns={2}
-                        data={tabWaste}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.name}
-                    />
-                </View>
-            </View>
+            <FlatList
+                ListHeaderComponent={
+                    <View>
+                        <Header/>
+                        <Text style={styles.title}>Liste des déchets</Text>
+                    </View>
+                }
+                numColumns={2}
+                data={tabWaste}
+                columnWrapperStyle={{paddingHorizontal: 35}}
+                renderItem={renderItem}
+                keyExtractor={item => item.name}
+            />
         </View>
     );
 
@@ -56,10 +58,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         paddingVertical: 5,
-        fontWeight: 'bold'
-    },
-    content: {
-        paddingHorizontal: 35,
+        fontWeight: 'bold',
+        paddingHorizontal: 35
     },
     item: {
         alignItems: 'center',
@@ -69,17 +69,14 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         marginRight: 15,
     },
-    list: {
-        flexDirection: 'row',
-        alignItems: 'center'
-
-    },
     itemTitle: {
         paddingTop: 15,
         fontWeight: 'bold',
+        maxWidth:120,
+        textAlign: 'center'
     },
     itemDate: {
-        color: '#A6A6D5',
+        color: COLORS.secondary,
         paddingTop: 10
     },
     image: {

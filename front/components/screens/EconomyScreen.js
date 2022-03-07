@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import * as React from 'react';
 import {Header} from "../common/Header";
 import {PieChart} from 'react-native-chart-kit'
 import {useState, useEffect} from "react";
 import * as WasteService from '../../services/wasteService'
-import {FontAwesome} from "@expo/vector-icons";
+import {FontAwesome, Ionicons, FontAwesome5} from "@expo/vector-icons";
+import {COLORS} from '../../variables/colors'
 
 export function EconomyScreen() {
 
@@ -14,9 +15,9 @@ export function EconomyScreen() {
 
     useEffect(() => {
         (async () => {
-            setYellowWaste(await WasteService.getWaste('yellow'));
-            setGreenWaste(await WasteService.getWaste('green'));
-            setGreyWaste(await WasteService.getWaste('grey'));
+            setYellowWaste(await WasteService.getWasteByColor('yellow'));
+            setGreenWaste(await WasteService.getWasteByColor('green'));
+            setGreyWaste(await WasteService.getWasteByColor('grey'));
         })();
     }, []);
 
@@ -30,17 +31,17 @@ export function EconomyScreen() {
                         {
                             name: 'déchet(s) recyclé(s)',
                             number: yellowWaste.length,
-                            color: '#FECE00',
+                            color: COLORS.yellow_trash,
                         },
                         {
                             name: 'déchet(s) en verre',
                             number: greenWaste.length,
-                            color: 'green',
+                            color: COLORS.green_trash,
                         },
                         {
                             name: 'déchet(s) jeté(s)',
                             number: greyWaste.length,
-                            color: 'grey',
+                            color: COLORS.grey_trash,
                         },
                     ]}
                     width={400}
@@ -58,7 +59,7 @@ export function EconomyScreen() {
                     }}
                     accessor="number"
                     backgroundColor="transparent"
-                    paddingLeft="35"
+                    paddingLeft="50"
                     absolute
                 />
             </>
@@ -67,37 +68,65 @@ export function EconomyScreen() {
 
     return (
         <View>
+            <ScrollView>
             <Header/>
             <View style={styles.container}>
-                <ScrollView>
-                    <Text style={styles.title}>Avec le tri, tu peux économiser des objets ! </Text>
-                    <View>
-                        <Text>Visuels qte economisees</Text>
+                <Text style={styles.title}>Avec le tri, tu peux économiser des objets ! </Text>
+                <View style={styles.visuel}>
+                    <Text style={styles.quantity}>x4</Text>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/milkbottles.png')}/>
                     </View>
+                    <Ionicons name='arrow-redo' color={COLORS.primary} size={50}/>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/toiletpaper.png')}/>
+                    </View>
+                </View>
+                <View style={styles.visuel}>
+                    <Text style={styles.quantity}>x27</Text>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/waterbottles.png')}/>
+                    </View>
+                    <Ionicons name='arrow-redo' color={COLORS.primary} size={50}/>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/adidas.png')}/>
+                    </View>
+                </View>
+                <View style={styles.visuel}>
+                    <Text style={styles.quantity}>x95</Text>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/canettes.png')}/>
+                    </View>
+                    <Ionicons name='arrow-redo' color={COLORS.primary} size={50}/>
+                    <View style={styles.circle}>
+                        <Image style={styles.img} source={require('../../assets/equivalents/trot.png')}/>
+                    </View>
+                </View>
                     <Text style={styles.title}>Les déchets que tu as triés </Text>
                     <MyPieChart />
                     <View style={styles.legend}>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="#FECE00" >
-                                <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                            <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
+                                <FontAwesome style={styles.icon} name='recycle' color="white" size={20}/>
                             </View>
                             <Text>{yellowWaste.length} déchet(s) recyclé(s)</Text>
                         </View>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="green" >
-                                <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                            <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
+                                <FontAwesome5 style={styles.icon} name='wine-bottle' color="white" size={20}/>
                             </View>
                             <Text>{greenWaste.length} déchet(s) en verre</Text>
                         </View>
                         <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor="grey" >
-                                <FontAwesome style={styles.icon} name='trash' color="white" size={30}/>
+                            <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
+                                <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
                             </View>
                             <Text>{greyWaste.length} déchet(s) jeté(s)</Text>
                         </View>
                     </View>
-                </ScrollView>
+
             </View>
+            </ScrollView>
         </View>
     );
 }
@@ -113,7 +142,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     legend: {
-
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 10,
+        paddingLeft: 60
     },
     label: {
         flexDirection: 'row',
@@ -126,4 +158,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: 7,
         marginRight: 10
     },
+    visuel: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        maxHeight: 180
+    },
+    img: {
+        maxHeight: 70,
+        maxWidth: 70
+    },
+    circle: {
+        backgroundColor: 'white',
+        padding: 15,
+        borderRadius: 50
+    },
+    quantity: {
+        fontSize: 20,
+        color: COLORS.primary,
+        fontWeight: 'bold',
+        position: 'absolute',
+        left: 40,
+        top: 5,
+        zIndex: 3
+    }
 })
