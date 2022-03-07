@@ -30,7 +30,6 @@ const App = () => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             isConnected(true);
-            console.log(user);
         } else {
             console.log("logout no user");
             isConnected(false);

@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../../../services/Firebase'
 import {styles} from '../../../styles/LoginStyle'
+import * as UserService from "../../../services/userService";
 
-export function SignUpScreen({ navigation }) {
+export function SignUpScreen() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const handleSignUp = () => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Inscrit avec :', user.email);
-            })
-            .catch(error => alert(error.message))
-    }
+    const [level, setLevel] = useState('')
+    const [number, setNumber] = useState('')
 
     return (
         <KeyboardAvoidingView
@@ -38,10 +30,22 @@ export function SignUpScreen({ navigation }) {
                         style={styles.input}
                         secureTextEntry
                     />
+                    <TextInput
+                        placeholder="Niveau"
+                        value={level}
+                        onChangeText={text => setLevel(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Nombre d'élèves"
+                        value={number}
+                        onChangeText={text => setNumber(text)}
+                        style={styles.input}
+                    />
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={handleSignUp}
+                        onPress={() => UserService.handleSignUp(email,password,level,number)}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>Je m'inscris</Text>

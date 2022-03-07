@@ -1,22 +1,11 @@
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../../../services/Firebase'
 import {styles} from '../../../styles/LoginStyle'
+import * as UserService from "../../../services/userService";
 
 export function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Connecté avec :', user.email);
-
-      })
-      .catch(error => alert(error.message))
-  }
 
      return (
           <KeyboardAvoidingView 
@@ -42,7 +31,7 @@ export function LoginScreen({ navigation }) {
           </View>
           <View style={styles.buttonContainer}>
               <TouchableOpacity
-                   onPress={handleLogin}
+                   onPress={() => UserService.handleLogin(email,password)}
                    style={styles.button}
               >
                    <Text style={styles.buttonText}>Connexion</Text>

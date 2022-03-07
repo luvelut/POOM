@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 35,
-        marginTop: 35,
+        marginTop: 25,
     },
     buttonContainer: {
         width: '60%',
