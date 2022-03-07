@@ -47,3 +47,12 @@ export function handleSignUp(email, password, level, number) {
         })
         .catch(error => alert(error.message))
 }
+
+export function handleSignOut(navigation) {
+    auth
+        .signOut()
+        .then(() => {
+            navigation.navigate("Login")
+        })
+        .catch(error => alert(error.message))
+}
