@@ -22,8 +22,10 @@ export function DashboardScreen({navigation}) {
 
     let isMounted = false;
     useEffect(() => {
+        console.log("useEffect1")
         if (!isMounted) {
             (async () => {
+                console.log("useEffect")
                 setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
                 setIsLoading(false);
             })();
@@ -89,25 +91,30 @@ export function DashboardScreen({navigation}) {
                     </TouchableHighlight>
                 </View>
                 <Text style={[styles.title, themeTextStyle]}>Liste des déchets</Text>
-                <View style={styles.list}>
-                    <FlatList
-                        numColumns={2}
-                        data={[tabData[0],tabData[1]]}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.name}
-                        scrollEnabled={false}
-                        columnWrapperStyle={{justifyContent: 'flex-end'}}
-                    />
-                    <TouchableHighlight style={styles.icon}
-                                        underlayColor="#ffffff"
-                                        accessibilityRole="button"
-                                        onPress={() => {
-                                            navigation.navigate('List', {tabWaste: tabData});
-                                        }
-                                        }>
-                        <Ionicons name="ios-add-outline" size={45} color="#9C9CD0" />
-                    </TouchableHighlight>
-                </View>
+                {tabData.length?
+                    <View style={styles.list}>
+                        <FlatList
+                            numColumns={2}
+                            data={[tabData[0],tabData[1]]}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.name}
+                            scrollEnabled={false}
+                            columnWrapperStyle={{justifyContent: 'flex-end'}}
+                        />
+                        <TouchableHighlight style={styles.icon}
+                                            underlayColor="#ffffff"
+                                            accessibilityRole="button"
+                                            onPress={() => {
+                                                navigation.navigate('List', {tabWaste: tabData});
+                                            }
+                                            }>
+                            <Ionicons name="ios-add-outline" size={45} color="#9C9CD0" />
+                        </TouchableHighlight>
+                    </View> :
+                    <View style={styles.emptyList}>
+                        <Text>Tu n'as scanné aucun déchet pour le moment !</Text>
+                    </View>
+                }
             </View>
             </ScrollView>
         </View>
@@ -206,5 +213,16 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 25,
         zIndex:1,
+    },
+    emptyList: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingHorizontal: 15,
+        borderRadius: 25,
+        backgroundColor: 'white',
+        marginVertical: 15,
+        marginHorizontal: 15,
+        justifyContent: 'center'
     }
 });
