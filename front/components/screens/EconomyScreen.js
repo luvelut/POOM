@@ -2,10 +2,12 @@ import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import * as React from 'react';
 import {Header} from "../common/Header";
 import {PieChart} from 'react-native-chart-kit'
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import * as WasteService from '../../services/wasteService'
 import {FontAwesome, Ionicons, FontAwesome5} from "@expo/vector-icons";
 import {COLORS} from '../../variables/colors'
+import {useFocusEffect} from "@react-navigation/native";
+
 
 export function EconomyScreen() {
 
@@ -13,13 +15,19 @@ export function EconomyScreen() {
     const [greenWaste, setGreenWaste] = useState([]);
     const [greyWaste, setGreyWaste] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            setYellowWaste(await WasteService.getWasteByColor('yellow'));
-            setGreenWaste(await WasteService.getWasteByColor('green'));
-            setGreyWaste(await WasteService.getWasteByColor('grey'));
-        })();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchWaste = async () => {
+                setYellowWaste(await WasteService.getWasteByColor('yellow'));
+                setGreenWaste(await WasteService.getWasteByColor('green'));
+                setGreyWaste(await WasteService.getWasteByColor('grey'));
+            }
+            fetchWaste();
+            return () => {
+                // quand on quitte le focus
+            };
+        }, [])
+    );
 
 
     const MyPieChart = () => {

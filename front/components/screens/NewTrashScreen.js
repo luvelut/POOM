@@ -4,18 +4,25 @@ import {COLORS} from "../../variables/colors";
 import {FontAwesome} from "@expo/vector-icons";
 import {auth} from '../../services/Firebase';
 import * as WasteService from "../../services/wasteService";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import * as Progress from 'react-native-progress';
+import {useFocusEffect} from "@react-navigation/native";
 
 export function NewTrashScreen({route, navigation}) {
     const [tabData, setTabData] = useState([]);
     const { name, img, grey, yellow, green } = route.params;
 
-    useEffect(() => {
-        (async () => {
-            setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
-        })();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchWaste = async () => {
+                setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
+            }
+            fetchWaste();
+            return () => {
+                // quand on quitte le focus
+            };
+        }, [])
+    );
 
     return (
         <View style={styles.container}>
@@ -28,7 +35,7 @@ export function NewTrashScreen({route, navigation}) {
                     <View style={styles.numberCircle}>
                         <Text style={styles.numberText}>{tabData.length}</Text>
                     </View>
-                    <Progress.Bar progress={(tabData.length)/100} width={100} borderWidth={0} color={COLORS.primary} unfilledColor={COLORS.background} height={10}/>
+                    <Progress.Bar progress={(tabData.length)/10} width={100} borderWidth={0} color={COLORS.primary} unfilledColor={COLORS.background} height={10}/>
                 </View>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Scanner')}
@@ -141,7 +148,7 @@ const styles = StyleSheet.create({
     numberCircle: {
         borderRadius: 50,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         borderStyle: 'solid',
         borderWidth: 4,
         borderColor: COLORS.tertiary,

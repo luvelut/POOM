@@ -1,17 +1,22 @@
 import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight, ScrollView} from 'react-native';
 import * as React from 'react';
 import {auth} from '../../services/Firebase';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Header} from '../common/Header';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {COLORS} from "../../variables/colors";
 import * as WasteService from "../../services/wasteService";
+import { useFocusEffect } from '@react-navigation/native';
 
 export function DashboardScreen({navigation}) {
    
     const [tabData, setTabData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const colorScheme = useColorScheme();
+    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+    const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     const renderItem = ({item}) => (
         <View style={styles.item}>
@@ -20,25 +25,18 @@ export function DashboardScreen({navigation}) {
         </View>
     );
 
-    let isMounted = false;
-    useEffect(() => {
-        console.log("useEffect1")
-        if (!isMounted) {
-            (async () => {
-                console.log("useEffect")
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchWaste = async () => {
                 setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
                 setIsLoading(false);
-            })();
-        }
-
-        return () => {
-            isMounted = true
-        }
-    }, []);
-    
-    const colorScheme = useColorScheme();
-    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-    const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+            }
+            fetchWaste();
+            return () => {
+                // quand on quitte le focus
+            };
+        }, [])
+    );
 
     if (isLoading) return <View style={[styles.container, themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
