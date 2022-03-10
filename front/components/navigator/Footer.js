@@ -1,19 +1,17 @@
-import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
+import {COLORS} from '../../variables/colors'
 
 export function Footer({ state, descriptors, navigation }) {
     return (
         <View style={styles.main}>
-            <TouchableHighlight underlayColor="#804cfc"
+            <TouchableHighlight underlayColor={COLORS.primary}
                 accessibilityRole="button"
                 onPress={() => {
                 if(navigation.canGoBack())
                 {
                     navigation.goBack();
-                }
-                else {
-                    Alert.alert('tu peux pas revenir + en arrière');
                 }
             }}>
                 <Ionicons name='chevron-back' color='white' size={40}/>
@@ -72,7 +70,7 @@ export function Footer({ state, descriptors, navigation }) {
 const styles = StyleSheet.create({
     main: {
         flexDirection: 'row',
-        backgroundColor: '#804cfc',
+        backgroundColor: COLORS.primary,
         justifyContent: 'space-around',
         //borderTopLeftRadius: 30,
         //borderTopRightRadius: 30,

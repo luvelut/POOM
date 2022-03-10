@@ -1,8 +1,12 @@
-import {StyleSheet, Text, TouchableOpacity, useColorScheme ,View, Alert, ScrollView} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, useColorScheme, View, Alert, ScrollView, TextInput} from 'react-native';
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
 import { FontAwesome } from '@expo/vector-icons';
-import {auth} from "../../../firebase";
+import {auth} from "../../../services/Firebase";
+import {COLORS} from '../../../variables/colors'
+import {useEffect, useState} from "react";
+import * as UserService from "../../../services/userService";
+
 
 export function GeneralScreen({navigation}) {
 
@@ -10,59 +14,71 @@ export function GeneralScreen({navigation}) {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
+    const [name, setName] = useState('');
+    const [loading, setIsLoading] = useState(true);
 
-    const handleSignOut = () => {
-        auth
-            .signOut()
-            .then(() => {
-                navigation.navigate("Login")
-            })
-            .catch(error => alert(error.message))
-    }
+    let isMounted = false;
+    useEffect(() => {
+        if (!isMounted) {
+            (async () => {
+                const tab = await UserService.getClassInfo(auth.currentUser?.email);
+                setName(tab[0].level);
+                setIsLoading(false);
+            })();
+        }
+
+        return () => {
+            isMounted = true
+        }
+    }, []);
 
     return (
-        <View>
-            <Settings/>
-            <ScrollView>
-            <View style={[styles.container, themeContainerStyle]}>
-                <Text style={[styles.title, themeTextStyle]}>Réglages généraux</Text>
-                <View style={styles.profil}>
-                    <FontAwesome name='user-circle' color="#A6A6D5" size={60}/>
+        <ScrollView>
+            <View>
+                <Settings/>
+                <View style={[styles.container, themeContainerStyle]}>
+                    <Text style={[styles.title, themeTextStyle]}>Réglages généraux</Text>
+                    <View style={styles.profil}>
+                        <FontAwesome name='user-circle' color={COLORS.secondary} size={60}/>
+                        <TouchableOpacity
+                            onPress={() => {
+                                Alert.alert("Cette fonctionnalité n'est pas encore disponible");
+                            }}
+                            style={styles.button}
+                        >
+                            <Text style={[styles.buttonText]} >Changer l'image</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <Text style={[styles.subtitle, themeTextStyle]}>Niveau de la classe</Text>
+                        <TextInput
+                            placeholder="Niveau de la classe"
+                            value={name}
+                            onChangeText={text => setName(text)}
+                            style={styles.form}
+                        />
+                        <Text style={[styles.subtitle, themeTextStyle]}>Adresse email</Text>
+                        <TextInput
+                            placeholder="Email"
+                            value={auth.currentUser?.email}
+                            onChangeText={text => setName(text)}
+                            style={styles.form}
+                        />
+                        <Text style={[styles.subtitle, themeTextStyle]}>Mot de passe</Text>
+                        <View style={styles.form}>
+                            <Text style={styles.formText}>************</Text>
+                            <FontAwesome name='edit' color={COLORS.secondary} size={20}/>
+                        </View>
+                    </View>
                     <TouchableOpacity
-                        onPress={() => {
-                            Alert.alert("Cette fonctionnalité n'est pas encore disponible");
-                        }}
-                        style={styles.button}
+                        onPress={() => UserService.handleSignOut(navigation)}
+                        style={[styles.button,styles.logout]}
                     >
-                        <Text style={[styles.buttonText]} >Changer l'image</Text>
+                        <Text style={styles.buttonText}>Déconnexion</Text>
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Nom de l'école</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color="#A6A6D5" size={20}/>
-                    </View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Mot de passe</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color="#A6A6D5" size={20}/>
-                    </View>
-                    <Text style={[styles.subtitle, themeTextStyle]}>Adresse email</Text>
-                    <View style={styles.form}>
-                        <Text style={styles.formText}>************</Text>
-                        <FontAwesome name='edit' color="#A6A6D5" size={20}/>
-                    </View>
-                </View>
-                <TouchableOpacity
-                    onPress={handleSignOut}
-                    style={[styles.button,styles.logout]}
-                >
-                    <Text style={styles.buttonText}>Déconnexion</Text>
-                </TouchableOpacity>
             </View>
-            </ScrollView>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -72,13 +88,13 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
         color: 'black',
     },
     darkThemeText: {
-        color: '#d0d0c0',
+        color: 'white',
     },
     title: {
         fontWeight: 'bold',
@@ -88,7 +104,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     button: {
-        backgroundColor: '#6B6BFD',
+        backgroundColor: COLORS.primary,
         padding : 10,
         borderRadius: 20,
         alignItems:'center',
@@ -112,10 +128,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         alignItems: 'center',
-        borderColor:"#A6A6D5"
+        borderColor: COLORS.secondary
     },
     formText: {
-        color:"#A6A6D5"
+        color: COLORS.secondary
     },
     logout : {
         marginBottom: 50

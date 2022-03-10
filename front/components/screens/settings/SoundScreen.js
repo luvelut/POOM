@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import * as React from 'react';
 import {Settings} from "../../navigator/Settings";
+import {COLORS} from "../../../variables/colors";
 
 export function SoundScreen() {
 
@@ -20,14 +21,14 @@ export function SoundScreen() {
 
 const styles = StyleSheet.create({
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
         color: 'black',
     },
     darkThemeText: {
         fontWeight: 'bold',
-        color: '#d0d0c0',
+        color: 'white',
     },
     container: {
         paddingHorizontal: 70,

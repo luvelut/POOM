@@ -3,6 +3,7 @@ import * as React from 'react';
 import {FontAwesome, Ionicons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
 import {useRoute} from "@react-navigation/native";
+import {COLORS} from '../../variables/colors'
 
 export function Settings() {
 
@@ -16,19 +17,19 @@ export function Settings() {
         <View style={[styles.content, themeContainerStyle]}>
             <TouchableOpacity onPress={() => navigation.navigate('GeneralSettings')}>
                 <View style={ route.name==='GeneralSettings' ? styles.currentButton : styles.button}>
-                    <Ionicons style={styles.icon} name='settings-outline' color={route.name==='GeneralSettings' ? "#816BFD" : "#A6A6D5"} size={20}/>
+                    <Ionicons style={styles.icon} name='settings-outline' color={route.name==='GeneralSettings' ? COLORS.primary : COLORS.secondary} size={20}/>
                     <Text style={ route.name==='GeneralSettings' ? styles.currentText : styles.text}>Général</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SoundSettings')}>
                 <View style={ route.name==='SoundSettings' ? styles.currentButton : styles.button}>
-                    <Ionicons style={styles.icon} name='volume-medium-outline' color={route.name==='SoundSettings' ? "#816BFD" : "#A6A6D5"} size={20}/>
+                    <Ionicons style={styles.icon} name='volume-medium-outline' color={route.name==='SoundSettings' ? COLORS.primary : COLORS.secondary} size={20}/>
                     <Text style={route.name==='SoundSettings' ? styles.currentText : styles.text}>Son</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('LicenseSettings')}>
                 <View style={ route.name==='LicenseSettings' ? styles.currentButton : styles.button}>
-                    <FontAwesome style={styles.icon} name='euro' color={route.name==='LicenseSettings' ? "#816BFD" : "#A6A6D5"} size={20}/>
+                    <FontAwesome style={styles.icon} name='euro' color={route.name==='LicenseSettings' ? COLORS.primary : COLORS.secondary} size={20}/>
                     <Text style={ route.name==='LicenseSettings' ? styles.currentText : styles.text}>Licence</Text>
                 </View>
             </TouchableOpacity>
@@ -44,10 +45,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     lightContainer: {
-        backgroundColor: '#F4F4FC',
+        backgroundColor: COLORS.background,
     },
     darkContainer: {
-        backgroundColor: '#242c40',
+        backgroundColor: COLORS.dark,
     },
     button: {
         flexDirection: 'row',
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 20,
         borderRadius: 20,
-        backgroundColor: '#E5E5FB',
+        backgroundColor: COLORS.tertiary,
         paddingHorizontal: 20,
         paddingVertical: 20,
     },
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
         paddingRight: 5
     },
     currentText : {
-        color:"#816BFD",
+        color: COLORS.primary,
         fontWeight: 'bold'
     },
     text : {
-        color:"#A6A6D5"
+        color: COLORS.secondary
     }
 })

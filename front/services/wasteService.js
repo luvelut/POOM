@@ -1,6 +1,6 @@
-import {auth, db} from "../firebase";
+import {auth, db} from "./Firebase";
 
-export async function getWaste(color) {
+export async function getWasteByColor(color) {
     return new Promise((resolve) => {
         const data=[];
         if(color==='yellow'){
@@ -39,5 +39,21 @@ export async function getWaste(color) {
                 console.log("Error getting documents: ", error);
             });
         }
+    });
+}
+
+export async function getWasteByUser(user) {
+    return new Promise((resolve) => {
+        const data=[];
+        db.collection("waste").where("user", "==", user)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    data.push(doc.data());
+                });
+                resolve(data);
+            }).catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
     });
 }

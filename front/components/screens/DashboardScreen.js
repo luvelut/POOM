@@ -1,32 +1,17 @@
-import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, useColorScheme,View, FlatList, Image, ActivityIndicator, TouchableOpacity, Alert, TouchableHighlight, ScrollView} from 'react-native';
 import * as React from 'react';
-import {db} from '../../firebase';
-import {auth} from '../../firebase';
+import {auth} from '../../services/Firebase';
 import {useEffect, useState} from 'react';
 import {Header} from '../common/Header';
 import { LinearGradient } from 'expo-linear-gradient';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import {COLORS} from "../../variables/colors";
+import * as WasteService from "../../services/wasteService";
 
 export function DashboardScreen({navigation}) {
    
     const [tabData, setTabData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    async function getUserWaste() {
-        return new Promise((resolve) => {
-            const data=[];
-            db.collection("waste").where("user", "==", auth.currentUser?.email)
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        data.push(doc.data());
-                    });
-                    resolve(data);
-                }).catch((error) => {
-                console.log("Error getting documents: ", error);
-            });
-        });
-    }
 
     const renderItem = ({item}) => (
         <View style={styles.item}>
@@ -39,7 +24,7 @@ export function DashboardScreen({navigation}) {
     useEffect(() => {
         if (!isMounted) {
             (async () => {
-                setTabData(await getUserWaste());
+                setTabData(await WasteService.getWasteByUser(auth.currentUser?.email));
                 setIsLoading(false);
             })();
         }
@@ -53,36 +38,37 @@ export function DashboardScreen({navigation}) {
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
     const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-    if (isLoading) return <View style={[styles.container, styles.themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
+    if (isLoading) return <View style={[styles.container, themeContainerStyle]}><ActivityIndicator size="large" color="#0000ff" /></View>
     return (
         <View style={themeContainerStyle}>
+            <ScrollView>
             <Header/>
             <View style={[styles.content, themeContainerStyle]}>
                 <View style={styles.buttons}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Economy')}>
-                    <LinearGradient
-                        colors={['rgb(165,107,253)', 'transparent']}
-                        style={styles.buttonGradienteQuantiteesEco}
-                        start={{ x: 1, y: 1 }}
-                        end={{ x: 1, y: 0 }}
-                    >
-                        <Text style={styles.buttonText}>Quantitées économisées</Text>
-                    </LinearGradient> 
-                        <Image style={styles.buttonQuantiteesEco} source={require('../../assets/quantitées_économisées.png')}/>
+                        <LinearGradient
+                            colors={['rgb(165,107,253)', 'transparent']}
+                            style={styles.buttonGradient}
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>Quantitées économisées</Text>
+                        </LinearGradient>
+                        <Image style={styles.buttonImage} source={require('../../assets/bouton/quantitees_economisees.png')}/>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
                         onPress={() => Alert.alert("En cours de développement")}>
                     <LinearGradient
                         colors={['rgb(165,107,253)', 'transparent']}
-                        style={styles.buttonGradientSuivi}
+                        style={styles.buttonGradient}
                         start={{ x: 1, y: 1 }}
                         end={{ x: 1, y: 0 }}
                     >
                         <Text style={styles.buttonText}>Suivi composte</Text>
                     </LinearGradient> 
-                        <Image style={styles.buttonSuivi} source={require('../../assets/composte.png')}/>
+                        <Image style={styles.buttonImage} source={require('../../assets/bouton/composte.png')}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={[styles.title, themeTextStyle]}>Badges</Text>
@@ -110,6 +96,7 @@ export function DashboardScreen({navigation}) {
                         renderItem={renderItem}
                         keyExtractor={item => item.name}
                         scrollEnabled={false}
+                        columnWrapperStyle={{justifyContent: 'flex-end'}}
                     />
                     <TouchableHighlight style={styles.icon}
                                         underlayColor="#ffffff"
@@ -122,31 +109,26 @@ export function DashboardScreen({navigation}) {
                     </TouchableHighlight>
                 </View>
             </View>
+            </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center"
-    },
     darkContainer: {
-        backgroundColor: '#394153',
+        backgroundColor: COLORS.dark_light,
     },
     lightThemeText: {
-        color: '#242c40',
+        color: COLORS.dark,
     },
     darkThemeText: {
-        color: '#d0d0c0',
+        color: 'white',
     },
     title: {
         fontSize: 18,
         paddingVertical: 5,
+        paddingHorizontal: 15,
         fontWeight: 'bold'
-    },
-    content: {
-        paddingHorizontal: 35,
     },
     item: {
         alignItems: 'center',
@@ -158,18 +140,19 @@ const styles = StyleSheet.create({
     },
     list: {
         flexDirection: 'row',
-        alignItems: 'center'
-
+        alignItems: 'center',
+        paddingRight: 25
     },
     icon: {
         backgroundColor: 'white',
         borderRadius: 40,
         padding: 10,
-        marginLeft: 5
     },
     itemTitle: {
         paddingTop: 5,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        maxWidth:120,
+        textAlign: 'center'
     },
     image: {
         width: 100,
@@ -179,7 +162,8 @@ const styles = StyleSheet.create({
     badgeSection: {
         flexDirection: 'row',
         paddingBottom: 15,
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: "center"
     },
     badgeList: {
         flexDirection: 'row',
@@ -198,7 +182,8 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flexDirection:'row',
-        paddingBottom: 10
+        paddingBottom: 10,
+        justifyContent:'space-around'
     },
     buttonText: {
         bottom : 20,
@@ -208,33 +193,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    buttonQuantiteesEco:{
-        left:1,
-        right:20,
+    buttonImage:{
         width: 160,
         height: 100,
         borderRadius: 25,
     },
-    buttonGradienteQuantiteesEco:{
+    buttonGradient:{
         position: 'absolute',
         left:1,
         right:20,
-        width: 160,
-        height: 100,
-        borderRadius: 25,
-        zIndex:1,
-    },
-    buttonSuivi:{
-        right:1,
-        left:20,
-        width: 160,
-        height: 100,
-        borderRadius: 25,
-    },
-    buttonGradientSuivi:{
-        position: 'absolute',
-        right:1,
-        left:20,
         width: 160,
         height: 100,
         borderRadius: 25,
