@@ -17,6 +17,8 @@ import {GeneralScreen} from "./components/screens/settings/GeneralScreen";
 import {LicenseScreen} from "./components/screens/settings/LicenseScreen";
 import {SoundScreen} from "./components/screens/settings/SoundScreen";
 import {EconomyScreen} from "./components/screens/EconomyScreen";
+import {FirstlessonScreen} from "./components/screens/FirstlessonScreen";
+import {SecondlessonScreen} from "./components/screens/SecondlessonScreen";
 import {ErrorScreen} from "./components/screens/ErrorScreen";
 import {NewTrashScreen} from "./components/screens/NewTrashScreen";
 import {SignUpScreen} from "./components/screens/login/SignUpScreen";
@@ -73,6 +75,8 @@ const App = () => {
             <Tab.Screen name={"Economy"} component={EconomyScreen} />
             <Tab.Screen name={"Error"} component={ErrorScreen} />
             <Tab.Screen name={"New"} component={NewTrashScreen} />
+            <Tab.Screen name={"FirstLesson"} component={FirstlessonScreen} />
+            <Tab.Screen name={"SecondLesson"} component={SecondlessonScreen} />
         </Tab.Navigator>);
     }
 
