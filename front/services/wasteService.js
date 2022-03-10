@@ -57,3 +57,9 @@ export async function getWasteByUser(user) {
         });
     });
 }
+
+export async function deleteWaste(id) {
+    return new Promise((resolve) => {
+        db.collection("waste").where("id", "==", id).delete()
+    });
+}

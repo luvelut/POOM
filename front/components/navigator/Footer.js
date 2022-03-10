@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         //borderTopLeftRadius: 30,
         //borderTopRightRadius: 30,
-        paddingBottom: 40,
+        paddingBottom: 20,
         paddingTop: 10,
     },
 });
