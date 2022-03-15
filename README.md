@@ -20,7 +20,7 @@ Dans cette partie de l’application, l’utilisateur va pouvoir voir son histor
 
 :video_game: __Jeux :__
 
-Un petit jeu pédagogique dans lequel le joueur (un élève entre 6 et 8 ans) va devoir choisir dans quel poubelle il doit mettre le déchet que l’on lui montre. *Cette partie ne sera pas développer pour le projet final*
+Un petit jeu pédagogique dans lequel le joueur (un élève entre 6 et 8 ans) va devoir choisir dans quel poubelle il doit mettre le déchet que l’on lui montre. *Cette partie ne sera pas développée pour le projet final*
 
 
 :books: __Ressources pédagogiques (« Cours ») :__
@@ -53,6 +53,11 @@ Nous utilisons `Firebase Authentication` pour la gestion des utilisateurs (conne
 * La vibration du téléphone quand un nouveau résultat est trouvé.
 
 *La gestion du thème sombre a également été réalisée.*
+
+### Lien
+Notre application est disponible en scannant le QR code de la page du projet :
+
+https://expo.dev/@luvelut/poom
 
 ## Auteurs
 
