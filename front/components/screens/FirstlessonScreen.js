@@ -13,27 +13,25 @@ export function FirstlessonScreen() {
 
      return (
           <ScrollView>
-          
-          <View style={styles.backgroundView}></View>
-
+          <View style={styles.backgroundView}/>
           <View style={styles.sectionCours}>
 
-          <Video
-               ref={video}
-               style={styles.video}
-               source={require('../../assets/pedagogie/videoTri.mp4')} 
-               useNativeControls
-               resizeMode="contain"
-               isLooping
-               onPlaybackStatusUpdate={status => setStatus(() => status)}
-          />
+              <Video
+                   ref={video}
+                   style={styles.video}
+                   source={require('../../assets/pedagogie/videoTri.mp4')}
+                   useNativeControls
+                   resizeMode="contain"
+                   isLooping
+                   onPlaybackStatusUpdate={status => setStatus(() => status)}
+              />
 
                <Text style={styles.titre}>SEANCE 1 : Guide contexte utilisation application</Text>
                <Text style={styles.contenu}>Pour mener cette séance 1, l’enseignant doit au préalable receuillir des emballage de déchets (nutritionnel) du quotidien. (exemples : paquet de gateaux, pot de nutella, conserves ...)</Text>
                 
                <View style={styles.sectionIcons}>
 
-                    <View style={styles.icons}>
+                    <View style={[styles.icons,styles.iconRight]}>
                          <TouchableOpacity
                               onPress={() => {
                               Alert.alert("Video en en-tête");
@@ -45,28 +43,27 @@ export function FirstlessonScreen() {
                          </TouchableOpacity>
                     </View>
 
-                    <View style={styles.icons}>
-                         <TouchableOpacity
-                              onPress={() => { 
+                   <View style={styles.icons}>
+                           <TouchableOpacity
+                               onPress={() => {
                                    setModalVisible(true)
-                              }}
-                              style={[styles.buttonCours]}
-                         >
-                         <Text style={styles.buttonTextCours}> 3
-                         <Ionicons style={styles.icon} name='image-outline' size={25} color="#816BFD"/></Text>
-                         </TouchableOpacity>
-                    </View>
+                               }}
+                               style={[styles.buttonCours]}
+                           >
+                               <Text style={styles.buttonTextCours}> 3
+                                   <Ionicons style={styles.icon} name='image-outline' size={25} color="#816BFD"/></Text>
+                           </TouchableOpacity>
+                       </View>
 
-                    <View style={styles.icons}>
-                         <TouchableOpacity style={[styles.imprimer]}
+                       <View style={styles.icons}>
+                           <TouchableOpacity style={[styles.imprimer]}
                                              onPress={() => {
-                                                  Alert.alert("Fonctionnalité pas encore disponible");
+                                                 Alert.alert("Fonctionnalité pas encore disponible");
                                              }}>
-                         <Ionicons style={styles.icon} name="print" size={30} color="#ffffff" />
-                         </TouchableOpacity>
-                    </View>
-
-               </View>
+                               <Ionicons style={styles.icon} name="print" size={30} color="#ffffff" />
+                           </TouchableOpacity>
+                       </View>
+                   </View>
           </View>
 
             
@@ -96,8 +93,6 @@ export function FirstlessonScreen() {
                /> 
           </View>
           </Modal>
-
-            
           <View style={[styles.sectionCours, styles.coursContenu]}>
                <Text style={styles.titreContenu}>INTRODUCTION</Text>
                <Text style={styles.contenu}>Avant de présenter l’application POOM, l’enseignant engage une discussion :</Text>
@@ -109,14 +104,14 @@ export function FirstlessonScreen() {
                <Text style={styles.titreContenu}>VIDEO</Text>
                <Text style={styles.contenu}>Une fois ce moment de discussion terminé, les réponses de chaque camarades aura éveillé leur reflexion, c'est le moment de dissocier les bonnes et les mauvaises réponses avec une vidéo explicative claire pour leur jeune âge. ( Video N°1 ci dessus dans les ressources )</Text>
                <Text style={styles.titreContenu}>BILAN ET TRACE ÉCRITE</Text>
-               <Text style={styles.contenu}>Suite à ce visionnage, il vous faudra les interoger sur ce qu'ils ont retenus, n'hesitez pas à noter au tableau en même temps.</Text>
+               <Text style={styles.contenu}>Suite à ce visionnage, il vous faudra les interroger sur ce qu'ils ont retenu, n'hesitez pas à noter au tableau en même temps.</Text>
                <Text style={styles.titreContenu}>CONCLUSION</Text>
-               <Text style={styles.contenu}>Pour conclure cette séance vous pouvez diffuser l'image en ressources qui récapitule les informations importantes de cette première séance.</Text>
-               <Text style={styles.contenu}>Bravo à vous pour cette premère séance, votre enseignement à un grand impact pour notre planète !</Text>
+               <Text style={styles.contenu}>Pour conclure cette séance vous pouvez diffuser l'image en ressource qui récapitule les informations importantes de cette première séance.</Text>
+               <Text style={styles.contenu}>Bravo à vous pour cette première séance, votre enseignement à un grand impact pour notre planète !</Text>
           </View>
           </ScrollView>
     );
-};
+}
 
 const styles = StyleSheet.create({
     backgroundView: {
@@ -195,7 +190,7 @@ const styles = StyleSheet.create({
      },
      sectionIcons: {
         flexDirection: 'row',
-        paddingBottom: 15,   
+        paddingBottom: 15,
      },
      icons: {
         paddingVertical: 2,
@@ -203,10 +198,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: 'white',
         marginVertical: 1,
-        marginRight: 10,
-     },
-     icon: {
-        paddingLeft: 5,
      },
       imprimer: {
           flexDirection: 'row',
@@ -218,27 +209,27 @@ const styles = StyleSheet.create({
           height : 50,
           marginTop: 20,
       },
-modalView: {
-     marginTop : 100,
-     marginBottom : 100,
-     flex : 1,
-    marginRight: 35,
-    marginLeft: 35,
-    width : 350,
-    height : 500,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 1,
-    shadowRadius: 100,
-    elevation: 5
-  },
+    modalView: {
+         marginTop : 100,
+         marginBottom : 100,
+         flex : 1,
+        marginRight: 15,
+        marginLeft: 15,
+        width : 350,
+        height : 500,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 1,
+        shadowRadius: 100,
+        elevation: 5
+      },
   closeModal: {
      textAlign: "center",
      paddingLeft: 5,
@@ -250,5 +241,8 @@ modalView: {
    gallery:{
         width : 300,
         margin: 0,
-   }
+   },
+    iconRight: {
+        marginRight: 10
+    }
 });

@@ -39,7 +39,7 @@ export function Settings() {
 
 const styles = StyleSheet.create({
     content: {
-        paddingTop : 60,
+        paddingTop : 30,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',

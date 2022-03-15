@@ -2,10 +2,12 @@ import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import * as React from 'react';
 import {Header} from "../common/Header";
 import {PieChart} from 'react-native-chart-kit'
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import * as WasteService from '../../services/wasteService'
 import {FontAwesome, Ionicons, FontAwesome5} from "@expo/vector-icons";
 import {COLORS} from '../../variables/colors'
+import {useFocusEffect} from "@react-navigation/native";
+
 
 export function EconomyScreen() {
 
@@ -13,13 +15,19 @@ export function EconomyScreen() {
     const [greenWaste, setGreenWaste] = useState([]);
     const [greyWaste, setGreyWaste] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            setYellowWaste(await WasteService.getWasteByColor('yellow'));
-            setGreenWaste(await WasteService.getWasteByColor('green'));
-            setGreyWaste(await WasteService.getWasteByColor('grey'));
-        })();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchWaste = async () => {
+                setYellowWaste(await WasteService.getWasteByColor('yellow'));
+                setGreenWaste(await WasteService.getWasteByColor('green'));
+                setGreyWaste(await WasteService.getWasteByColor('grey'));
+            }
+            fetchWaste();
+            return () => {
+                // quand on quitte le focus
+            };
+        }, [])
+    );
 
 
     const MyPieChart = () => {
@@ -102,29 +110,40 @@ export function EconomyScreen() {
                         <Image style={styles.img} source={require('../../assets/equivalents/trot.png')}/>
                     </View>
                 </View>
-                    <Text style={styles.title}>Les déchets que tu as triés </Text>
-                    <MyPieChart />
-                    <View style={styles.legend}>
-                        <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
-                                <FontAwesome style={styles.icon} name='recycle' color="white" size={20}/>
+                {yellowWaste.length || greyWaste.length || greenWaste.length ?
+                    <View>
+                        <Text style={styles.title}>Les déchets que tu as triés </Text>
+                        <MyPieChart />
+                        <View style={styles.legend}>
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.yellow_trash} >
+                                    <FontAwesome style={styles.icon} name='recycle' color="white" size={20}/>
+                                </View>
+                                <Text>{yellowWaste.length} déchet(s) recyclé(s)</Text>
                             </View>
-                            <Text>{yellowWaste.length} déchet(s) recyclé(s)</Text>
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
+                                    <FontAwesome5 style={styles.icon} name='wine-bottle' color="white" size={20}/>
+                                </View>
+                                <Text>{greenWaste.length} déchet(s) en verre</Text>
+                            </View>
+                            <View style={styles.label}>
+                                <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
+                                    <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
+                                </View>
+                                <Text>{greyWaste.length} déchet(s) jeté(s)</Text>
+                            </View>
                         </View>
-                        <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor={COLORS.green_trash} >
-                                <FontAwesome5 style={styles.icon} name='wine-bottle' color="white" size={20}/>
-                            </View>
-                            <Text>{greenWaste.length} déchet(s) en verre</Text>
-                        </View>
-                        <View style={styles.label}>
-                            <View style={styles.iconCircle} backgroundColor={COLORS.grey_trash} >
-                                <FontAwesome style={styles.icon} name='trash' color="white" size={20}/>
-                            </View>
-                            <Text>{greyWaste.length} déchet(s) jeté(s)</Text>
+                    </View> :
+                    <View>
+                        <Text style={styles.title}>Les déchets que tu as triés </Text>
+                        <View style={styles.emptyPie}>
+                            <Text>
+                                Tu n'as pas encore scanné de déchet, scannes-en et reviens ici pour voir un graphique sur ton tri !
+                            </Text>
                         </View>
                     </View>
-
+                }
             </View>
             </ScrollView>
         </View>
@@ -181,5 +200,12 @@ const styles = StyleSheet.create({
         left: 40,
         top: 5,
         zIndex: 3
+    },
+    emptyPie: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        justifyContent: 'center'
     }
 })
