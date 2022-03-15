@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "FirebaseAuth",
-    "slug": "FirebaseAuth",
+    "name": "POOM",
+    "slug": "poom",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "primaryColor": "#6b6bfd",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
