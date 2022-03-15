@@ -14,7 +14,7 @@ export function SecondlessonScreen() {
      return (
           <ScrollView>
           
-               <View style={styles.backgroundView}></View>
+               <View style={styles.backgroundView}/>
 
                <View style={styles.sectionCours}>
 
@@ -33,7 +33,7 @@ export function SecondlessonScreen() {
                     
                     <View style={styles.sectionIcons}>
 
-                         <View style={styles.icons}>
+                         <View style={[styles.icons, styles.iconRight]}>
                               <TouchableOpacity
                                    onPress={() => {
                                    Alert.alert("Video en en-tête");
@@ -201,10 +201,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: 'white',
         marginVertical: 1,
-        marginRight: 10,
-     },
-     icon: {
-        paddingLeft: 5,
      },
       imprimer: {
           flexDirection: 'row',
@@ -220,8 +216,8 @@ modalView: {
      marginTop : 100,
      marginBottom : 100,
      flex : 1,
-    marginRight: 35,
-    marginLeft: 35,
+    marginRight: 15,
+    marginLeft: 15,
     width : 350,
     height : 500,
     backgroundColor: "white",
@@ -248,5 +244,8 @@ modalView: {
    gallery:{
         width : 300,
         margin: 0,
-   }
+   },
+    iconRight: {
+        marginRight: 10
+    }
 });

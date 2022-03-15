@@ -6,7 +6,7 @@ export function LessonScreen({navigation}) {
     
         return (
             <ScrollView>
-            <View style={styles.centeredView} >
+            <View style={styles.page}>
                 <View style={styles.modalView}>
                     <Text style={styles.textT}>Ressources Pédagogiques</Text>
                     
@@ -66,12 +66,11 @@ export function LessonScreen({navigation}) {
         </View>  
         </ScrollView>
     );
-};
+}
 
 const styles = StyleSheet.create({
     modalView: {
         alignItems: "center",
-        width: 420,
         backgroundColor: "#6B6BFD",
         height : 250,
         marginTop : 0,
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     },
     image:{
         marginTop: 20,
-        width: 350,
+        width: 300,
         height: 130,
         borderRadius: 35
     },
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 30,
         fontSize: 18,
+        paddingHorizontal: 10
     },
     button: {
         backgroundColor: '#6B6BFD',
@@ -146,5 +146,8 @@ const styles = StyleSheet.create({
     },
     itemStyle: {
         padding: 10,
-      }
+      },
+    page: {
+        paddingBottom: 40
+    }
 });

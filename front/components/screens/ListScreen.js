@@ -3,8 +3,9 @@ import * as React from 'react';
 import {Header} from "../common/Header";
 import {FontAwesome, Ionicons} from "@expo/vector-icons";
 import {COLORS} from '../../variables/colors'
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import * as WasteService from "../../services/wasteService";
+import {auth} from "../../services/Firebase";
 
 export function ListScreen({route, navigation}) {
     let { tabWaste } = route.params;
@@ -13,6 +14,12 @@ export function ListScreen({route, navigation}) {
     }
     const [modalVisible, setModalVisible] = useState(false);
     const [item, setItem] = useState(null);
+
+    async function fetchWaste(id) {
+        await WasteService.deleteWaste(id);
+        setModalVisible(!modalVisible);
+        navigation.navigate('Dashboard');
+    }
 
     const renderItem = ({item}) => (
         <View style={styles.item}>
@@ -69,9 +76,7 @@ export function ListScreen({route, navigation}) {
                                 <Pressable
                                     style={styles.modalButton}
                                     onPress={() => {
-                                        tabWaste=tabWaste.filter(waste => waste.id !==item.id);
-                                        WasteService.deleteWaste().then((r)=> console.log(r));
-                                        setModalVisible(!modalVisible);
+                                        fetchWaste(item.id);
                                     } }
                                 >
                                     <Text style={styles.modalButtonTxt}>Supprimer</Text>
@@ -91,7 +96,7 @@ export function ListScreen({route, navigation}) {
                 data={tabWaste}
                 columnWrapperStyle={{paddingHorizontal: 35}}
                 renderItem={renderItem}
-                keyExtractor={item => item.name}
+                keyExtractor={item => item.id}
             />
         </View>
     );

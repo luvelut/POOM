@@ -60,6 +60,11 @@ export async function getWasteByUser(user) {
 
 export async function deleteWaste(id) {
     return new Promise((resolve) => {
-        db.collection("waste").where("id", "==", id).delete()
-    });
+        db.collection("waste").doc(id.toString()).delete().then(() => {
+            console.log("Document successfully deleted!");
+            resolve(true);
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+    })
 }

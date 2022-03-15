@@ -103,12 +103,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingVertical: 20,
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 20,
+        width: 300
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10
+        marginBottom: 10,
     },
     button: {
         backgroundColor: COLORS.primary,
@@ -139,7 +140,9 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: 15,
+        overflow: 'hidden',
+        width: 160,
     },
     numberText: {
         fontWeight: 'bold',

@@ -29,6 +29,7 @@ export function ResultScreen({route, navigation}) {
             setProductUrl('https://via.placeholder.com/150/A6A6D5/FFFFFF/?text=Image')
         }
         const res = await cityRef.set({
+            id: randomId,
             name: productName,
             packaging: apiData,
             user: auth.currentUser?.email,
