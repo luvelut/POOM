@@ -48,6 +48,8 @@ const DATA = await axios.get('https://world.openfoodfacts.org/api/v0/product/'+n
 Firebase fournit un ensemble de solutions et de services compatible avec les applications.
 Nous utilisons `Firebase Authentication` pour la gestion des utilisateurs (connexion et inscription), ainsi que `Firestore` qui nous permet de stocker les produits scannés dans une base de donnée.
 
+Nous avons également réalisé la fonction de réinitialisation de mot de passe oublié grâce à Firebase.
+
 ### Plugins implémentés
 * L'accès à la caméra et le scanner du code barre.
 * La vibration du téléphone quand un nouveau résultat est trouvé.
