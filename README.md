@@ -1,4 +1,5 @@
 # POOM
+[React Native] Application pédagogique d'apprentissage du tri sélectif
 
 ![badge](made-with-react-native.svg)
 
